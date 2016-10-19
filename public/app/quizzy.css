@@ -1,0 +1,10 @@
+body {
+    background: url("../img/background.jpg");
+    background-size: cover;
+}
+
+.content {
+    max-width: 960px;
+    height: 100%;
+    margin: 0 auto;
+}

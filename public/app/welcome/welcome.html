@@ -1,0 +1,10 @@
+<div class="welcome-text" layout="row" layout-align="center center">
+    <span>QUIZZY WELCOMES YOU</span>
+</div>
+
+<div class="categories-list-container" layout="row" flex>
+    <md-card ng-repeat="category in categories">
+        <div ng-bind="category.name"></div>
+        <img src="{{category.img}}" alt="{{category.name}}">
+    </md-card>
+</div>
