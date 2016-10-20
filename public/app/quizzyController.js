@@ -1,12 +1,9 @@
 'use strict';
 
-angular.module('quizzy')
-    .controller('QuizzyController', [
-        '$scope',
-        'questionsService',
-        QuizzyController
-    ]);
+export default QuizzyController;
 
-function QuizzyController($scope, questionsService) {
+QuizzyController.$inject = ['$scope'];
+
+function QuizzyController($scope) {
 
 }

@@ -1,0 +1,14 @@
+.category-page-title {
+  color: #fff;
+  font-size: 36px;
+
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.game-container md-card {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border: 2px solid #fff;
+}

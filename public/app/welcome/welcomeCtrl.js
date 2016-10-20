@@ -1,13 +1,10 @@
 'use strict';
 
-angular
-  .module('quizzy.welcome')
-  .controller('WelcomeCtrl', [
-    '$scope',
-    'welcomeService',
-    WelcomeCtrl
-  ]);
+export default WelcomeCtrl;
+
+WelcomeCtrl.$inject = ['$scope','welcomeService'];
 
 function WelcomeCtrl($scope, welcomeService) {
   $scope.categories = welcomeService.categories;
+  $scope.openCategoryPage = welcomeService.openCategoryPage;
 }

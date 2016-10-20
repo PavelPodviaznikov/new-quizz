@@ -1,12 +1,10 @@
 'use strict';
 
-angular
-  .module('quizzy.welcome')
-  .factory('welcomeService', welcomeService);
+export default welcomeService;
 
-welcomeService.$inject = [];
+welcomeService.$inject = ['$state'];
 
-function welcomeService() {
+function welcomeService($state) {
   var self = {};
 
   self.categories = [
@@ -14,9 +12,17 @@ function welcomeService() {
       name: 'Capitals',
       value: 'capitals',
       playersOnline: 0,
-      img: '../../img/capitals.jpg'
+      img: '../../img/capitals.jpg',
+      state: {
+        name: 'category',
+        param: 'capitals'
+      }
     }
   ];
+
+  self.openCategoryPage = category => {
+    $state.go(category.state.name, {name: category.state.param, category: category});
+  };
 
   return self;
 }

@@ -3,8 +3,8 @@
 </div>
 
 <div class="categories-list-container" layout="row" flex>
-    <md-card ng-repeat="category in categories">
+    <md-card ng-repeat="category in categories" ng-click="openCategoryPage(category)">
         <div ng-bind="category.name"></div>
-        <img src="{{category.img}}" alt="{{category.name}}">
+        <img ng-src="{{category.img}}" alt="{{category.name}}">
     </md-card>
 </div>

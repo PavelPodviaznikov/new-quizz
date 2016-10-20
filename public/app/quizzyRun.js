@@ -1,8 +1,6 @@
 'use strict';
 
-angular
-  .module('quizzy')
-  .run(quizzyRun);
+export default quizzyRun;
 
 quizzyRun.$inject = ['$rootScope'];
 

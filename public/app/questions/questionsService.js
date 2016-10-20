@@ -13,11 +13,11 @@ function questionsService($http) {
 
     self.loadQuestions = function() {
         $http.get('/questions').then(onQuestionsLoaded, onQuestionsLoadingFailed);
-    }
+    };
 
     self.loadThemes = function() {
         $http.get('/themes').then(onThemesLoaded, onThemesLoadingFailed);
-    }
+    };
 
     function onQuestionsLoaded(response) {
         console.log(response.data);

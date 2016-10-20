@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('quizzy')
-  .config(quizzyRouter);
+export default quizzyRouter;
 
 quizzyRouter.$inject = ['$urlRouterProvider', '$stateProvider'];
 
@@ -14,9 +13,22 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
       url: '/welcome',
       views: {
         'content': {
-          templateUrl: '/app/welcome/welcome.html',
+          template: require('./welcome/welcome.html'),
           controller: 'WelcomeCtrl'
         }
+      }
+    })
+    .state({
+      name: 'category',
+      url: '/category?name',
+      views: {
+        'content': {
+          template: require('./category/category.html'),
+          controller: 'CategoryCtrl'
+        }
+      },
+      onEnter($stateParams, categoryService) {
+        categoryService.loadCategory($stateParams.name);
       }
     });
 }
