@@ -2,9 +2,9 @@
 
 export default categoryService;
 
-categoryService.$inject = ['$http'];
-
 function categoryService($http) {
+  'ngInject';
+
   let self = {};
 
   self.category = {
@@ -25,7 +25,7 @@ function categoryService($http) {
   };
 
   function onCategoryLoaded(response) {
-    
+
   }
 
   return self;

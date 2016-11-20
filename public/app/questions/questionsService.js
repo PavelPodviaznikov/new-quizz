@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('quizzy.questions')
-    .factory('questionsService', [
-        '$http',
-        questionsService
-    ]);
+    .factory('questionsService');
 
 function questionsService($http) {
+    'ngInject';
+
     var self = {};
 
     self.themes = [];

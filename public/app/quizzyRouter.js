@@ -2,9 +2,9 @@
 
 export default quizzyRouter;
 
-quizzyRouter.$inject = ['$urlRouterProvider', '$stateProvider'];
-
 function quizzyRouter($urlRouterProvider, $stateProvider) {
+  'ngInject';
+
   $urlRouterProvider.otherwise('/welcome');
 
   $stateProvider

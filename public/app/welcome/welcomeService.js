@@ -2,9 +2,9 @@
 
 export default welcomeService;
 
-welcomeService.$inject = ['$state'];
-
 function welcomeService($state) {
+  'ngInject';
+  
   var self = {};
 
   self.categories = [

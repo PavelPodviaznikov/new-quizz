@@ -2,8 +2,8 @@
 
 export default CategoryCtrl;
 
-CategoryCtrl.$inject = ['$scope', 'categoryService'];
-
 function CategoryCtrl ($scope, categoryService) {
+  'ngInject';
+
   $scope.category = categoryService.category;
 }
