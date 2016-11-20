@@ -7,6 +7,7 @@ import 'angular-animate';
 import 'angular-aria';
 import 'angular-material';
 import 'jquery';
+import 'socket.io-client';
 
 /* Vendor styles */
 import 'angular-material/angular-material.min.css';
@@ -21,6 +22,8 @@ import quizzyRouter from './quizzyRouter';
 import welcome from './welcome/welcome';
 import category from './category/category';
 
+import socketService from './quizzy/services/socketService';
+
 angular
   .module('quizzy', [
     'ui.router',
@@ -31,4 +34,5 @@ angular
   ])
   .run(quizzyRun)
   .config(quizzyRouter)
-  .controller(QuizzyCtrl.name, QuizzyCtrl);
+  .controller(QuizzyCtrl.name, QuizzyCtrl)
+  .service('socketService', socketService);

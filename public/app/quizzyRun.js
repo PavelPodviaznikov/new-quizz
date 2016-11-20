@@ -2,7 +2,7 @@
 
 export default quizzyRun;
 
-function quizzyRun($rootScope) {
+function quizzyRun($rootScope, socketService) {
   'ngInject';
 
   $rootScope.$on('$stateChangeStart', function() {

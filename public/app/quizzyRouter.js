@@ -30,10 +30,7 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
         }
       },
       onEnter($stateParams, categoryService) {
-        categoryService.loadCategory($stateParams.name);
-      },
-      onExit(categoryService) {
-        categoryService.reset();
+        categoryService.init($stateParams.name);
       }
     });
 }
