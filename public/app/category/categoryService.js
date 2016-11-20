@@ -32,6 +32,7 @@ function categoryService($http, $stateParams, $interval) {
       }, 1000);
     },
     stop() {
+      this.value = 10;
       $interval.cancel(this.interval);
     }
   };
@@ -59,6 +60,12 @@ function categoryService($http, $stateParams, $interval) {
     }).then(onQuestionLoaded);
 
     self.category.name = categoryName.toUpperCase();
+  };
+
+  self.reset = () => {
+    self.timer.stop();
+    self.score.correct = 0;
+    self.score.incorrect = 0;
   };
 
   function onQuestionLoaded(response) {
