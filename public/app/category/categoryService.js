@@ -25,7 +25,7 @@ function categoryService($http) {
   };
 
   function onCategoryLoaded(response) {
-    debugger;
+    
   }
 
   return self;
