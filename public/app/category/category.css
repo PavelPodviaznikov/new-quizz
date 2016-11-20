@@ -11,4 +11,30 @@
   height: 100%;
   background: #000;
   border: 2px solid #fff;
+  color: #fff;
+}
+
+.answers-container md-card {
+  margin: 0;
+  padding: 10px;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.answers-container md-card:hover {
+  background-color: #666666;
+}
+
+.answers-container md-card:focus {
+  outline: none;
+}
+
+.game-container .header .correct {
+  color: green;
+}
+
+.game-container .header .incorrect,
+.game-container .header .timing {
+  color: red;
 }

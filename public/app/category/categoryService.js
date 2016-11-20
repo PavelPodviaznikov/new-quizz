@@ -2,7 +2,7 @@
 
 export default categoryService;
 
-function categoryService($http) {
+function categoryService($http, $stateParams, $interval) {
   'ngInject';
 
   let self = {};
@@ -11,21 +11,61 @@ function categoryService($http) {
     name: ''
   };
 
+  self.question = {};
+
+  self.score = {
+    correct: 0,
+    incorrect: 0
+  };
+
+  self.timer = {
+    value: 10,
+    interval: null,
+    start() {
+      this.value = 10;
+      this.interval = $interval(()=>{
+        if(this.value === 0) {
+          self.makeAnswer('');
+        }
+
+        this.value--;
+      }, 1000);
+    },
+    stop() {
+      $interval.cancel(this.interval);
+    }
+  };
+
+  self.makeAnswer = answer => {
+    if(answer === self.question.answer) {
+      self.score.correct++;
+    } else {
+      self.score.incorrect++;
+    }
+
+    self.timer.stop();
+
+    self.loadCategory($stateParams.name);
+  };
+
   self.loadCategory = categoryName => {
     if (!categoryName) return false;
 
     //Will send request for category here
     $http({
-      url: '/category',
+      url: '/question',
       method: "GET",
       params: {categoryName}
-    }).then(onCategoryLoaded);
+    }).then(onQuestionLoaded);
 
     self.category.name = categoryName.toUpperCase();
   };
 
-  function onCategoryLoaded(response) {
+  function onQuestionLoaded(response) {
+    if(!response && !response.data) return false;
 
+    self.timer.start();
+    Object.assign(self.question, response.data);
   }
 
   return self;

@@ -26,7 +26,7 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
         'content': {
           template: require('./category/category.html'),
           controller: 'CategoryCtrl',
-          controllerAs: 'category'
+          controllerAs: 'categoryCtrl'
         }
       },
       onEnter($stateParams, categoryService) {
