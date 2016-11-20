@@ -2,9 +2,9 @@
 
 export default WelcomeCtrl;
 
-function WelcomeCtrl($scope, welcomeService) {
+function WelcomeCtrl(welcomeService) {
   'ngInject';
 
-  $scope.categories = welcomeService.categories;
-  $scope.openCategoryPage = welcomeService.openCategoryPage;
+  this.categories = welcomeService.categories;
+  this.openCategoryPage = welcomeService.openCategoryPage;
 }
