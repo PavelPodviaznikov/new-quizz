@@ -3,11 +3,12 @@
 import Firebase from '../quizzy/services/firebaseService';
 
 class AuthService {
-  constructor($state, $mdDialog, $rootScope, userService) {
+  constructor($state, $mdDialog, $rootScope, $http, userService) {
     this._$mdDialog = $mdDialog;
     this._$state = $state;
     this._userService = userService;
     this._$rootScope = $rootScope;
+    this._$http = $http;
   }
 
   openAuthDialog() {
@@ -33,9 +34,17 @@ class AuthService {
   }
 
   authWithGoogle() {
+    let googleUser;
+
     Firebase.googleAuth()
       .then(result => {
-        this._userService.setActiveUser(result.user);
+        googleUser = result;
+
+        return signIn.call(this, googleUser);
+      })
+      .then(response => {
+        console.log(response);
+        this._userService.setActiveUser(googleUser.user);
         this._$rootScope.$emit('user:authorized');
         this.closeDialog();
       })
@@ -47,6 +56,14 @@ class AuthService {
   closeDialog() {
     this._$mdDialog.cancel();
   }
+}
+
+function signIn(googleUser) {
+  return this._$http({
+    method: 'GET',
+    url: '/user',
+    params: {email: googleUser.user.email, token: googleUser.credential.idToken}
+  });
 }
 
 export default AuthService;
