@@ -36,7 +36,7 @@ module.exports = {
 function checkIfUserExists(email) {
   return firebase.database().ref('users/' + email).once('value')
     .then(snapshot => {
-      if(snapshot.val()) saveUser(email);
+      if(!snapshot.val()) saveUser(email);
     });
 }
 
