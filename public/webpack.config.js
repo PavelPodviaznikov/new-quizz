@@ -1,13 +1,13 @@
 
 
 module.exports = {
-  entry: "./app/quizzy.js",
+  entry: "./public/app/quizzy.js",
   output: {
     path: __dirname + '/build',
     publicPath: '/build/',
     filename: 'bundle.js'
   },
-  watch: true,
+  watch: false,
   watchOptions: {
     aggregateTimeout: 100
   },
