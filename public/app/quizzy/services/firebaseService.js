@@ -10,6 +10,10 @@ class Firebase {
 
     return firebase.auth().signInWithPopup(this._googleProvider);
   }
+
+  static logout() {
+    return firebase.auth().signOut();
+  }
 }
 
 export default Firebase;

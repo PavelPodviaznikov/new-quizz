@@ -21,14 +21,15 @@ import QuizzyCtrl from './quizzyController';
 import quizzyService from './quizzyService';
 import quizzyRun from './quizzyRun';
 import quizzyRouter from './quizzyRouter';
+
 import welcome from './welcome/welcome';
 import category from './category/category';
 import auth from './auth/auth';
-
-import quizzyHeader from './quizzy/directives/header/headerDirective';
+import header from './quizzy/directives/header/header';
 
 import socketService from './quizzy/services/socketService';
 import userService from './quizzy/services/userService';
+import eventEmitter from './quizzy/services/eventEmitter';
 
 angular
   .module('quizzy', [
@@ -38,7 +39,8 @@ angular
 
     welcome.name,
     category.name,
-    auth.name
+    auth.name,
+    header.name
   ])
   .run(quizzyRun)
   .config(quizzyRouter)
@@ -46,4 +48,4 @@ angular
   .service('quizzyService', quizzyService)
   .service('userService', userService)
   .service('socketService', socketService)
-  .directive(quizzyHeader.name, quizzyHeader);
+  .service('eventEmitter', eventEmitter);

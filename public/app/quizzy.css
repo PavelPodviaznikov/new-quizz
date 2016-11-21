@@ -22,3 +22,7 @@ body {
 md-card:focus {
   outline: none;
 }
+
+.bg-yellow {
+  background-color: #e6e600!important;
+}

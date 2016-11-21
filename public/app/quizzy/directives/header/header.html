@@ -1,5 +1,19 @@
 <div class="header" layout="row" layout="start center">
   <span class="logo" ng-click="onLogoClick()">QUIZZY</span>
   <span flex></span>
-  <md-button type="button" name="button" class="white-btn-with-border auth-btn" ng-click="onAuthClick()">Auth</md-button>
+  <md-button type="button" name="button" ng-if="!user.name"
+             class="white-btn-with-border auth-btn" ng-click="onAuthClick()">Auth
+  </md-button>
+  <div class="active-user" layout="row" layout-align="center center" ng-if="user.name">
+    <span class="user-name" ng-click="toggleMenu($event)" ng-bind="user.name"></span>
+    <img class="user-photo" ng-click="toggleMenu($event)" ng-src="{{user.photo}}" alt="{{user.name}}" />
+    <div class="user-menu"  ng-click="$event.stopPropagation()" ng-if="menu.isOpened">
+        <div class="logout">
+          <md-button ng-click="onLogoutClick()" layout="row" layout-align="center center">
+            <span>Log out</span>
+            <ng-md-icon icon="logout"></ng-md-icon>
+          </md-button>
+        </div>
+    </div>
+  </div>
 </div>

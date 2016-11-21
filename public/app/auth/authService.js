@@ -24,9 +24,17 @@ class AuthService {
     });
   }
 
+  logout() {
+    Firebase.logout()
+      .then(() => {
+        this._$rootScope.$emit('user:logout');
+      })
+      .catch((err) => console.error(err));
+  }
+
   authWithGoogle() {
     Firebase.googleAuth()
-      .then((result) => {
+      .then(result => {
         this._userService.setActiveUser(result.user);
         this._$rootScope.$emit('user:authorized');
         this.closeDialog();
