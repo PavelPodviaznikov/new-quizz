@@ -11,21 +11,11 @@ function socket(http) {
 
     socket.on('disconnect', () => {
      console.log(`Connection ${socket.id} closed`);
+     categoryService.clear.call(socket);
     });
 
-    socket.on('category:capitals:joined', () => {
-      categoryService.init({
-        category: 'capitals',
-        socket: socket
-      });
-    });
-
-    socket.on('category:capitals:answer', ()=>{
-      categoryService.generateQuestion({
-        category: 'capitals',
-        socket: socket
-      });
-    });
+    socket.on('room:joined', categoryService.generateQuestion);
+    socket.on('room:answer', categoryService.checkAnswer);
   });
 }
 

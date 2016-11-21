@@ -11,7 +11,7 @@
       </span>
       <span flex></span>
       <span class="md-headline">Time:
-        <span ng-bind="categoryCtrl.timer.value" ng-class="{'timing': categoryCtrl.timer.value < 4}"></span>
+        <span ng-bind="categoryCtrl.question.time" ng-class="{'timing': categoryCtrl.question.time <= 5}"></span>
       </span>
     </div>
     <div class="question-container md-padding" layout="row" layout-align="center center">

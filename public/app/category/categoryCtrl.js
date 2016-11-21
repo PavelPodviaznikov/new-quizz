@@ -7,8 +7,7 @@ function CategoryCtrl (categoryService) {
 
   this.category = categoryService.category;
   this.question = categoryService.question;
-  // this.score = categoryService.score;
-  // this.timer = categoryService.timer;
+  this.score = categoryService.score;
   //
   this.makeAnswer = categoryService.makeAnswer;
 }

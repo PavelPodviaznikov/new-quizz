@@ -7,29 +7,49 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
 
   let self = {};
   let socket = socketService.socket;
+  let interval;
 
   self.category = {
     name: ''
   };
 
-  self.question = {};
+  self.question = { };
+
+  self.score = {
+    correct: 0,
+    incorrect: 0
+  };
 
   self.init = category => {
     self.category.name = category.toUpperCase();
 
-    socket.emit(`category:${category}:joined`);
-    socket.on(`category:${category}:question`, onQuestionLoaded);
+    socket.emit('room:joined', category);
+    socket.on('room:question', onQuestionLoaded);
+    socket.on('room:answer:checked', onAnswerChecked)
   };
 
   self.makeAnswer = answer => {
-    socket.emit(`category:${self.category.name.toLowerCase()}:answer`);
+    socket.emit('room:answer', {category: self.category.name.toLowerCase(), answer});
   };
 
   function onQuestionLoaded(question) {
     if(!question) return false;
-    console.log(question);
+
     Object.assign(self.question, question);
+    startTimer();
     $rootScope.$apply();
+  }
+
+  function startTimer() {
+    if(interval) $interval.cancel(interval);
+
+    interval = $interval(()=>{
+      self.question.time--;
+    }, 1000);
+  }
+
+  function onAnswerChecked (leaders) {
+    Object.assign(self.score, leaders[socket.id].score);
   }
 
   // let socket = socketService.socket;
@@ -45,24 +65,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   //   incorrect: 0
   // };
   //
-  // self.timer = {
-  //   value: 10,
-  //   interval: null,
-  //   start() {
-  //     this.value = 10;
-  //     this.interval = $interval(()=>{
-  //       if(this.value === 0) {
-  //         self.makeAnswer('');
-  //       }
   //
-  //       this.value--;
-  //     }, 1000);
-  //   },
-  //   stop() {
-  //     this.value = 10;
-  //     $interval.cancel(this.interval);
-  //   }
-  // };
   //
   // self.makeAnswer = answer => {
   //   debugger;
