@@ -18,7 +18,7 @@ module.exports = {
       { test: /\.html$/, loader: 'raw' },
       {
         test: /\.js?$/,
-        include: __dirname + '\\app',
+        include: __dirname + '/app',
         loader: 'babel', // 'babel-loader' is also a legal name to reference
         query: {
           cacheDirectory: true,
