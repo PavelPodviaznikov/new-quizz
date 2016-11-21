@@ -13,3 +13,12 @@ body {
 .md-errors-spacer {
   display: none;
 }
+
+.white-btn-with-border {
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+md-card:focus {
+  outline: none;
+}

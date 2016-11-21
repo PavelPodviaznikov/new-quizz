@@ -1,7 +1,7 @@
 'use strict';
 
-export default QuizzyController;
-
-function QuizzyController() {
-
+function QuizzyController($state, quizzyService) {
+  
 }
+
+export default QuizzyController;

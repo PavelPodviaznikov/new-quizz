@@ -1,0 +1,15 @@
+.logo {
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.logo:focus {
+  outline: none;
+}
+
+.header {
+  margin-bottom: 30px;
+}

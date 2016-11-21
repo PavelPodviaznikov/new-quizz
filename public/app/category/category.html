@@ -1,7 +1,3 @@
-<div class="category-page-title" layout="row" layout-align="center center">
-  <span ng-bind="categoryCtrl.category.name"></span>
-</div>
-
 <div class="game-container" layout="row" flex>
   <md-card>
     <div class="header md-padding" layout="row">
@@ -9,6 +5,8 @@
         <span class="correct" ng-bind="categoryCtrl.score.correct"></span> |
         <span class="incorrect" ng-bind="categoryCtrl.score.incorrect"></span>
       </span>
+      <span flex></span>
+      <span class="md-headline" ng-bind="categoryCtrl.category.name"></span>
       <span flex></span>
       <span class="md-headline">Time:
         <span ng-bind="categoryCtrl.question.time" ng-class="{'timing': categoryCtrl.question.time <= 5}"></span>

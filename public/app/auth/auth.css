@@ -1,0 +1,8 @@
+.auth-dialog md-dialog-content {
+  font-size: 20px;
+}
+
+.auth-dialog .google-icon {
+  fill: #ff3232;
+  cursor: pointer;
+}

@@ -7,9 +7,11 @@ let app = express();
 let http = require('http').Server(app);
 let router = require('./app/router');
 let socket = require('./app/socket');
+let firebase = require('./app/firebase');
 
 router(app);
 socket(http);
+firebase.init();
 
 app.use(express.static(__dirname + '/public'));
 
