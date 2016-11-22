@@ -1,5 +1,7 @@
 'use strict';
 
+import Firebase from './firebaseService';
+
 class EventEmitter {
   constructor($rootScope, headerService, authService, userService) {
     $rootScope.$on('user:authorized', () => {
@@ -16,6 +18,10 @@ class EventEmitter {
 
     $rootScope.$on('user:logout', () => {
       userService.resetActiveUser();
+    });
+
+    $rootScope.$on('env:data:loaded', (e, env) => {
+      Firebase.init(env);
     });
   }
 }

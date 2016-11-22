@@ -4,15 +4,19 @@ let util = require('./util');
 
 let firebase = require("firebase");
 
+let firebaseCofig = {
+  apiKey: process.env.FB_API_KEY,
+  authDomain: process.env.FB_AUTH_DOMAIN,
+  databaseURL: process.env.FB_DATABASE_URL,
+  storageBucket: process.env.FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.FB_MESSAGING_SENDER_ID
+};
+
 module.exports = {
+  config: firebaseCofig,
+
   init() {
-    firebase.initializeApp({
-      apiKey: "AIzaSyDfpjZJ3cj7ORhMeTDIXlUnvI1F1F5G0rY",
-      authDomain: "quizzy-7b0e4.firebaseapp.com",
-      databaseURL: "https://quizzy-7b0e4.firebaseio.com",
-      storageBucket: "quizzy-7b0e4.appspot.com",
-      messagingSenderId: "58498864379"
-    });
+    firebase.initializeApp(firebaseCofig);
   },
 
   onUserAuthenticated(req, res) {

@@ -9,6 +9,10 @@ function router(app) {
         res.send([{ name: 'Capitals', value: 'capitals' }]);
     });
 
+    app.get('/env', (req, res) => {
+      res.send(firebase.config);
+    });
+
     app.get('/user', firebase.onUserAuthenticated);
 }
 

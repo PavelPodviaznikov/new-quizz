@@ -1,8 +1,14 @@
 'use strict';
 
+import firebase from 'firebase';
+
 class Firebase {
   constructor() {
     this._googleProvider = null;
+  }
+
+  static init(config) {
+    firebase.initializeApp(config);
   }
 
   static googleAuth() {
