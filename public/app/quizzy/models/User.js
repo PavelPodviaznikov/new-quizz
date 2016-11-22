@@ -17,6 +17,10 @@ class User {
   clear() {
     setDefaultData.call(this);
   }
+
+  setScore(score) {
+    Object.assign(this.score, score);
+  }
 }
 
 function setDefaultData() {
@@ -24,6 +28,10 @@ function setDefaultData() {
   this.name = '';
   this.email = '';
   this.photo = null;
+  this.score = {
+    correct: 0,
+    incorrect: 0
+  };
 }
 
 export default User;

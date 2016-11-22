@@ -2,6 +2,7 @@
 
 let capitals = require('./themes/capitals.json');
 let util = require('../util');
+let firebase = require('../firebase');
 
 let interval;
 
@@ -41,20 +42,12 @@ module.exports = {
 function updateUserStatistic(config) {
   let socket = this;
 
-  if(!categories[config.category].leaderboard[socket.id]) {
-    categories[config.category].leaderboard[socket.id] = {
-      score: {
-        correct: 0,
-        incorrect: 0
-      }
-    };
-  }
-
-  checkAnswer(config.answer, config.category) ?
-      categories[config.category].leaderboard[socket.id].score.correct++ :
-      categories[config.category].leaderboard[socket.id].score.incorrect++;
-
-  socket.emit('room:answer:checked', categories[config.category].leaderboard);
+  firebase.updateScore(util.encodeKey(config.email), checkAnswer(config.answer, config.category))
+    .then(score => {
+      let scores = {};
+      scores[config.email] = score;
+      socket.emit('room:answer:checked', scores);
+    });
 }
 
 function checkAnswer(answer, category) {

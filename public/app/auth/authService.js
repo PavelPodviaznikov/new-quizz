@@ -44,7 +44,7 @@ class AuthService {
       })
       .then(response => {
         console.log(response);
-        this._userService.setActiveUser(googleUser.user);
+        this._userService.setActiveUser(googleUser.user, response.data);
         this._$rootScope.$emit('user:authorized');
         this.closeDialog();
       })

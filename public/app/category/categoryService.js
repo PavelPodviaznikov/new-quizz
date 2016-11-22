@@ -2,12 +2,13 @@
 
 export default categoryService;
 
-function categoryService($http, $stateParams, $interval, $rootScope, socketService) {
+function categoryService($http, $stateParams, $interval, $rootScope, socketService, userService) {
   'ngInject';
 
   let self = {};
   let socket = socketService.socket;
   let interval;
+  let user = userService.getActiveUser();
 
   self.category = {
     name: ''
@@ -15,10 +16,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
 
   self.question = { };
 
-  self.score = {
-    correct: 0,
-    incorrect: 0
-  };
+  self.score = user.score;
 
   self.init = category => {
     self.category.name = category.toUpperCase();
@@ -29,7 +27,11 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   };
 
   self.makeAnswer = answer => {
-    socket.emit('room:answer', {category: self.category.name.toLowerCase(), answer});
+    socket.emit('room:answer', {
+      category: self.category.name.toLowerCase(),
+      answer: answer,
+      email: user.email
+    });
   };
 
   function onQuestionLoaded(question) {
@@ -48,8 +50,12 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
     }, 1000);
   }
 
-  function onAnswerChecked (leaders) {
-    Object.assign(self.score, leaders[socket.id].score);
+  function onAnswerChecked (scores) {
+    console.log(scores);
+    let score = scores[user.email];
+
+    self.score.correct = score.correct;
+    self.score.incorrect = score.incorrect;
   }
 
   // let socket = socketService.socket;

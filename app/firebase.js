@@ -26,27 +26,49 @@ module.exports = {
     let credential = firebase.auth.GoogleAuthProvider.credential(token);
 
     firebase.auth().signInWithCredential(credential)
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
+      .then(response => getUsersScore(email))
+      .then(score => res.send(score))
+      .catch(err => res.send(err));
 
-    checkIfUserExists(email);
-  }
+    // checkIfUserExists(email);
+  },
+
+  updateScore: updateScore
 };
 
-function checkIfUserExists(email) {
-  return firebase.database().ref('users/' + email).once('value')
+function getUsersScore(email) {
+  return firebase.database().ref('users/' + email + '/score').once('value')
     .then(snapshot => {
-      if(!snapshot.val()) saveUser(email);
+      return snapshot.val();
     });
 }
 
-function saveUser(email) {
-  firebase.database().ref('users/' + email).set({
-    correct: 0,
-    incorrect: 0
-  });
+function updateScore(email, isCorectAnswer) {
+  return firebase.database().ref('users/' + email + '/score').once('value')
+    .then(snapshot => {
+      let score = snapshot.val();
+
+      isCorectAnswer ? score.correct++ : score.incorrect++;
+
+      firebase.database().ref('users/' + email + '/score').update(score);
+
+      return score;
+    });
 }
+
+//
+// // function checkIfUserExists(email) {
+// //   return firebase.database().ref('users/' + email).once('value')
+// //     .then(snapshot => {
+// //       if(!snapshot.val()) saveUser(email);
+// //     });
+// // }
+//
+// // function saveUser(email) {
+// //   firebase.database().ref('users/' + email).set({
+// //     score: {
+// //       correct: 0,
+// //       incorrect: 0
+// //     }
+// //   });
+// // }
