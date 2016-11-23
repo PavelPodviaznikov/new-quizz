@@ -7,11 +7,8 @@ class UserService {
     this._activeUser = new User();
   }
 
-  setActiveUser(user, score) {
+  setActiveUser(user) {
     this._activeUser.fillWith(user);
-    this._activeUser.setScore(score);
-
-    console.log(this._activeUser);
   }
 
   getActiveUser() {

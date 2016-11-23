@@ -19,6 +19,20 @@ module.exports = {
     firebase.initializeApp(firebaseCofig);
   },
 
+  registerUser(user) {
+    return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
+  },
+
+  isUserExistsInDB(email) {
+    return firebase.database().ref('users/' + util.encodeKey(email)).once('value');
+  },
+
+  addUser(user) {
+    user.score = {correct: 0, incorrect: 0};
+    return firebase.database().ref('users/' + util.encodeKey(user.email)).set(user)
+      .then(() => user);
+  },
+
   onUserAuthenticated(req, res) {
     let email = util.encodeKey(req.query.email),
         token = req.query.token;

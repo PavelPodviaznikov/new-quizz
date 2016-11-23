@@ -7,8 +7,8 @@ function signUp() {
     scope: {},
     template: require('./signUp.html'),
     controller($scope, signUpService) {
-      $scope.signUp = signUpService.signUp;
-      $scope.signUpWithGoogle = signUpService.signUpWithGoogle;
+      $scope.signUp = signUpService.signUp.bind(signUpService);
+      $scope.signUpWithGoogle = signUpService.signUpWithGoogle.bind(signUpService);
     }
   };
 }

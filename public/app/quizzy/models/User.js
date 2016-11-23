@@ -8,24 +8,25 @@ class User {
   fillWith(user) {
     if(!user) return false;
 
-    this.id = user.uid;
-    this.name = user.displayName;
+    this.name = user.name;
+    this.surname = user.surname;
     this.email = user.email;
     this.photo = user.photoURL;
+    Object.assign(this.score, user.score);
   }
 
   clear() {
     setDefaultData.call(this);
   }
 
-  setScore(score) {
-    Object.assign(this.score, score);
+  get fullName() {
+    return `${this.name} ${this.surname}`; 
   }
 }
 
 function setDefaultData() {
-  this.id = '';
   this.name = '';
+  this.surname = '';
   this.email = '';
   this.photo = null;
   this.score = {
