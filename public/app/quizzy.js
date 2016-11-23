@@ -9,6 +9,7 @@ import 'angular-material';
 import 'jquery';
 import 'socket.io-client';
 import 'angular-material-icons';
+import 'angular-messages';
 
 /* Vendor styles */
 import 'angular-material/angular-material.min.css';
@@ -37,6 +38,7 @@ angular
   .module('quizzy', [
     'ui.router',
     'ngMaterial',
+    'ngMessages',
     'ngMdIcons',
 
     welcome.name,
