@@ -21,6 +21,24 @@ module.exports = {
       .then(snapshot => isUserExists(snapshot.val()) || firebase.addUser(user))
       .then(data => res.send(data))
       .catch(err => res.status(400).send(err));
+  },
+
+  authorizeUser(req, res) {
+    let user = req.query;
+
+    firebase.authorizeUser(user)
+      .then(() => firebase.getUser(user.email))
+      .then(snapshot => res.send(snapshot.val()))
+      .catch(err => res.status(400).send(err));
+  },
+
+  authorizeUserWithGoogle(req, res) {
+    let user = req.query;
+
+    firebase.authorizeUserWithGoogle(user)
+      .then(() => firebase.getUser(user.email))
+      .then(snapshot => res.send(snapshot.val()))
+      .catch(err => res.status(400).send(err));
   }
 };
 

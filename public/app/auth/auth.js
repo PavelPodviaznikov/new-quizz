@@ -10,6 +10,7 @@ import signUp from './signUp/signUpDirective';
 import signIn from './signIn/signInDirective';
 
 import signUpService from './signUp/signUpService';
+import signInService from './signIn/signInService';
 
 export default angular
   .module('quizzy.auth', [])
@@ -18,4 +19,5 @@ export default angular
   .directive(signIn.name, signIn)
   .service('authService', AuthService)
   .service('signUpService', signUpService)
+  .service('signInService', signInService)
   .controller(AuthCtrl.name, AuthCtrl);

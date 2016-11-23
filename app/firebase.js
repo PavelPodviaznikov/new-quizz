@@ -43,6 +43,20 @@ module.exports = {
       .then(() => user);
   },
 
+  authorizeUser(user) {
+    return firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+  },
+
+  authorizeUserWithGoogle(user) {
+    let credential = firebase.auth.GoogleAuthProvider.credential(user.token);
+
+    return firebase.auth().signInWithCredential(credential);
+  },
+
+  getUser(email) {
+    return firebase.database().ref('users/' + util.encodeKey(email)).once('value');
+  },
+
   onUserAuthenticated(req, res) {
     let email = util.encodeKey(req.query.email),
         token = req.query.token;

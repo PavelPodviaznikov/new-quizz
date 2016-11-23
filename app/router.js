@@ -21,7 +21,8 @@ function router(app) {
     app.post('/user', Auth.registerUser);
     app.post('/user-google', Auth.registerUserWithGoogle);
 
-    app.get('/user', firebase.onUserAuthenticated);
+    app.get('/user', Auth.authorizeUser);
+    app.get('/user-google', Auth.authorizeUserWithGoogle)
 }
 
 module.exports = router;

@@ -6,8 +6,9 @@ function signIn() {
     replace: true,
     scope: {},
     template: require('./signIn.html'),
-    controller() {
-
+    controller($scope, signInService) {
+      $scope.signIn = signInService.signIn.bind(signInService);
+      $scope.signInWithGoogle = signInService.signInWithGoogle.bind(signInService);
     }
   };
 }
