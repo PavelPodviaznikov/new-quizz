@@ -26,6 +26,8 @@ import welcome from './welcome/welcome';
 import category from './category/category';
 import auth from './auth/auth';
 import header from './quizzy/directives/header/header';
+import socials from './quizzy/directives/socials/socials';
+import spinner from './quizzy/directives/spinner/spinnerDirective';
 
 import socketService from './quizzy/services/socketService';
 import userService from './quizzy/services/userService';
@@ -40,7 +42,8 @@ angular
     welcome.name,
     category.name,
     auth.name,
-    header.name
+    header.name,
+    socials.name
   ])
   .run(quizzyRun)
   .config(quizzyRouter)
@@ -48,4 +51,5 @@ angular
   .service('quizzyService', quizzyService)
   .service('userService', userService)
   .service('socketService', socketService)
-  .service('eventEmitter', eventEmitter);
+  .service('eventEmitter', eventEmitter)
+  .directive(spinner.name, spinner);

@@ -1,6 +1,6 @@
 <md-dialog aria-label="Auth" class="auth-dialog">
   <form ng-cloak>
-    <md-toolbar class="bg-yellow">
+    <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Auth</h2>
         <span flex></span>
@@ -11,11 +11,11 @@
     </md-toolbar>
 
     <md-dialog-content class="md-padding">
-      <ng-md-icon class="google-icon" icon="google-plus" ng-click="ac.authWithGoogle()"></ng-md-icon>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Sign in"><sign-in></<sign-in></md-tab>
+        <md-tab label="Sign up"><sign-up></sign-up></md-tab>
+      </md-tabs>
+      <spinner ng-if="ac.spinner.isShown"></spinner>
     </md-dialog-content>
-
-    <!-- <md-dialog-actions layout="row">
-
-    </md-dialog-actions> -->
   </form>
 </md-dialog>

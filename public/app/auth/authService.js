@@ -1,6 +1,7 @@
 'use strict';
 
 import Firebase from '../quizzy/services/firebaseService';
+import spinner from '../quizzy/directives/spinner/Spinner';
 
 class AuthService {
   constructor($state, $mdDialog, $rootScope, $http, userService) {
@@ -36,6 +37,8 @@ class AuthService {
   authWithGoogle() {
     let googleUser;
 
+    spinner.toggle();
+
     Firebase.googleAuth()
       .then(result => {
         googleUser = result;
@@ -46,6 +49,7 @@ class AuthService {
         console.log(response);
         this._userService.setActiveUser(googleUser.user, response.data);
         this._$rootScope.$emit('user:authorized');
+        spinner.toggle();
         this.closeDialog();
       })
       .catch(e => {
