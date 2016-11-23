@@ -37,7 +37,18 @@
   fill: #fff;
 }
 
-.header .user-photo:hover {
+.header .user-photo-placeholder {
+  fill: #fff;
+  height: 35px;
+}
+
+.header .user-photo-placeholder svg {
+  width: 35px;
+  height: 35px;
+}
+
+.header .user-photo:hover,
+.header .user-photo-placeholder:hover {
   cursor: pointer;
 }
 
@@ -47,6 +58,7 @@
   background: aliceblue;
   top: 100%;
   left: 0;
+  min-width: 100px;
   border-radius: 3px;
   padding: 4px;
   background: #000;

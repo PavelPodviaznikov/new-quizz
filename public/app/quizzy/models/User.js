@@ -8,8 +8,8 @@ class User {
   fillWith(user) {
     if(!user) return false;
 
-    this.name = user.name;
-    this.surname = user.surname;
+    this.name = user.name || '';
+    this.surname = user.surname || '';
     this.email = user.email;
     this.photo = user.photoURL;
     Object.assign(this.score, user.score);
@@ -20,7 +20,13 @@ class User {
   }
 
   get fullName() {
-    return `${this.name} ${this.surname}`; 
+    if(!this.name && !this.surname) return null;
+
+    return `${this.name} ${this.surname}`;
+  }
+
+  get disaplayValue() {
+    return this.fullName || this.email;
   }
 }
 
