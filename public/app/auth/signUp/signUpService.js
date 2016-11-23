@@ -3,10 +3,11 @@
 import spinner from '../../quizzy/directives/spinner/Spinner';
 
 class SignUpService {
-  constructor($http, userService, authService) {
+  constructor($http, userService, authService, toastService) {
     this._$http = $http;
     this._authService = authService;
     this._userService = userService;
+    this._toastService = toastService;
   }
 
   signUp(form, user) {
@@ -24,7 +25,10 @@ class SignUpService {
       if(!response.data) return false;
 
       if(response.data.code === "auth/email-already-in-use") {
-        alert('this email is in use. sign in or try another email')
+        this._toastService.fail({
+          msg: "This email is in use.",
+          parent: '.auth-dialog md-dialog-content'
+        });
 
         return false;
       }
