@@ -1,5 +1,6 @@
 'use strict';
 
+import Firebase from '../../quizzy/services/firebaseService';
 import spinner from '../../quizzy/directives/spinner/Spinner';
 
 class SignUpService {
@@ -15,37 +16,79 @@ class SignUpService {
 
     spinner.toggle();
 
-    this._$http({
-      method: "POST",
-      url: '/user',
-      data: {"user": user}
-    })
-    .then(response => {
-      spinner.toggle();
-      if(!response.data) return false;
-
-      if(response.data.code === "auth/email-already-in-use") {
-        this._toastService.fail({
-          msg: "This email is in use.",
-          parent: '.auth-dialog md-dialog-content'
-        });
-
-        return false;
-      }
-
-      this._authService.closeDialog();
-      this._userService.setActiveUser(response.data);
-    })
-    .catch(e => {
-      spinner.toggle();
-      console.error(e);
-    });
-
+    registerUser.call(this, user)
+      .then(onUserRegisterSuccess.bind(this))
+      .catch(onUserRegisterFail.bind(this));
   }
 
   signUpWithGoogle() {
-    console.log('google sign up');
+    let me = this;
+
+    spinner.toggle();
+
+    Firebase.googleAuth()
+      .then(googleUser => {
+
+        let user = {
+          email: googleUser.user.email,
+          token: googleUser.credential.idToken
+        };
+
+        return registerUserWithGoogle.call(me, user);
+      })
+      .then(onUserRegisterSuccess.bind(me))
+      .catch(onUserRegisterFail.bind(me));
   }
+}
+
+function registerUser(user) {
+  return this._$http({
+    method: "POST",
+    url: '/user',
+    data: {"user": user}
+  });
+}
+
+function registerUserWithGoogle(user) {
+  return this._$http({
+    method: "POST",
+    url: '/user-google',
+    data: {"user": user}
+  });
+}
+
+function onUserRegisterSuccess(response) {
+  spinner.toggle();
+
+  if(!response.data) return false;
+
+  if(isUserExists(response.data.code)) {
+    displayFailToast.call(this);
+
+    return false;
+  }
+
+  this._authService.closeDialog();
+  this._userService.setActiveUser(response.data);
+}
+
+function onUserRegisterFail(err) {
+  spinner.toggle();
+
+  if(isUserExists(err.data.code)) {
+    displayFailToast.call(this);
+  }
+}
+
+function isUserExists(msg) {
+  return msg === "auth/email-already-in-use";
+}
+
+function displayFailToast() {
+  this._toastService.fail({
+    msg: "This email is in use.",
+    parent: '.auth-dialog md-dialog-content'
+  });
 }
 
 export default SignUpService;

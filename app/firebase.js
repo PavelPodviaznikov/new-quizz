@@ -23,12 +23,22 @@ module.exports = {
     return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
   },
 
+  registerUserWithGoogle(user) {
+    let credential = firebase.auth.GoogleAuthProvider.credential(user.token);
+
+    return firebase.auth().signInWithCredential(credential);
+  },
+
   isUserExistsInDB(email) {
     return firebase.database().ref('users/' + util.encodeKey(email)).once('value');
   },
 
   addUser(user) {
     user.score = {correct: 0, incorrect: 0};
+
+    delete user.token;
+    delete user.password;
+
     return firebase.database().ref('users/' + util.encodeKey(user.email)).set(user)
       .then(() => user);
   },

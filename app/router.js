@@ -19,6 +19,7 @@ function router(app) {
     });
 
     app.post('/user', Auth.registerUser);
+    app.post('/user-google', Auth.registerUserWithGoogle);
 
     app.get('/user', firebase.onUserAuthenticated);
 }
