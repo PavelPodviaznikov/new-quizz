@@ -31,6 +31,9 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
       },
       onEnter($stateParams, categoryService) {
         categoryService.init($stateParams.name);
+      },
+      onExit(categoryService) {
+        categoryService.onCategoryLeave();
       }
     });
 }

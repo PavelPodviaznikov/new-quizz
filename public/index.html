@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app="quizzy" ng-controller="QuizzyController as qc">
+<html class="no-js" ng-app="quizzy" ng-controller="QuizzyController as qc" ng-cloak>
 <!--<![endif]-->
 
 <head>
@@ -16,8 +16,13 @@
     <link rel="icon" href="img/favicon.png">
 </head>
 
-<body>
-    <div layout="column" class="md-padding content" ui-view="content" flex></div>
+<body ng-click="qc.onBodyClick()">
+    <div layout="column" class="md-padding content" flex>
+      <quizzy-header></quizzy-header>
+      <div layout="row" flex>
+        <div layout="column" ui-view="content" flex></div>
+      </div>
+    </div>
 </body>
 
 <!--App scripts-->

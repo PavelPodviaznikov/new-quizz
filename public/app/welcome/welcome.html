@@ -1,7 +1,3 @@
-<div class="welcome-text" layout="row" layout-align="center center">
-    <span>QUIZZY WELCOMES YOU</span>
-</div>
-
 <div class="categories-list-container" layout="row" flex>
     <md-card ng-repeat="category in welcome.categories" ng-click="welcome.openCategoryPage(category)">
         <div ng-bind="category.name"></div>

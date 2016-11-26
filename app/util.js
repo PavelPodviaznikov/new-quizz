@@ -25,5 +25,9 @@ module.exports = {
     }
 
     return array;
+  },
+
+  encodeKey(string) {
+    return encodeURIComponent(string).split('.').join('%2E');
   }
 };

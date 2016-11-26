@@ -1,0 +1,21 @@
+<md-dialog aria-label="Auth" class="auth-dialog">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Auth</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="ac.closeDialog()">
+          <ng-md-icon icon="close" aria-label="Close dialog"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content class="md-padding">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Sign in"><sign-in></<sign-in></md-tab>
+        <md-tab label="Sign up"><sign-up></sign-up></md-tab>
+      </md-tabs>
+      <spinner ng-if="ac.spinner.isShown"></spinner>
+    </md-dialog-content>
+  </form>
+</md-dialog>

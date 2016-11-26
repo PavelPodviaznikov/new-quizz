@@ -2,6 +2,7 @@
 
 let io = require('socket.io');
 let categoryService = require('./category');
+let OnlineUsers = require('./controllers/OnlineUsersController');
 
 function socket(http) {
   io = io(http);
@@ -12,9 +13,22 @@ function socket(http) {
     socket.on('disconnect', () => {
      console.log(`Connection ${socket.id} closed`);
      categoryService.clear.call(socket);
+     OnlineUsers.removeOnlineUser(socket);
     });
 
-    socket.on('room:joined', categoryService.generateQuestion);
+    socket.on('room:joined', (data) => {
+       categoryService.generateQuestion.call(socket, data.category);
+       OnlineUsers.addOnlineUser(data.user, socket);
+    });
+
+    socket.on('room:leave', () => {
+      OnlineUsers.removeOnlineUser(socket);
+    });
+
+    socket.on('user:authorized', user => {
+      OnlineUsers.updateOnlineUser(user, socket);
+    });
+
     socket.on('room:answer', categoryService.checkAnswer);
   });
 }

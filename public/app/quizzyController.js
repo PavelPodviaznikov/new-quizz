@@ -1,7 +1,9 @@
 'use strict';
 
-export default QuizzyController;
-
-function QuizzyController() {
-
+function QuizzyController($state, $rootScope) {
+  this.onBodyClick = () => {
+    $rootScope.$emit('hide:menu');
+  };
 }
+
+export default QuizzyController;
