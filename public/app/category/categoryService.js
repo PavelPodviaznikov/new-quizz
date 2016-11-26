@@ -2,7 +2,7 @@
 
 export default categoryService;
 
-function categoryService($http, $stateParams, $interval, $rootScope, socketService, userService) {
+function categoryService($http, $stateParams, $interval, $rootScope, socketService, userService, onlineUsersService) {
   'ngInject';
 
   let self = {};
@@ -14,6 +14,8 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
     name: ''
   };
 
+  self.onlineUsers = onlineUsersService.onlineUsers;
+
   self.question = { };
 
   self.score = user.score;
@@ -21,7 +23,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   self.init = category => {
     self.category.name = category.toUpperCase();
 
-    socket.emit('room:joined', category);
+    socket.emit('room:joined', {category, user});
     socket.on('room:question', onQuestionLoaded);
     socket.on('room:answer:checked', onAnswerChecked)
   };
@@ -32,6 +34,10 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
       answer: answer,
       email: user.email
     });
+  };
+
+  self.onCategoryLeave = () => {
+    socket.emit('room:leave');
   };
 
   function onQuestionLoaded(question) {

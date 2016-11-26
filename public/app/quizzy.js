@@ -34,6 +34,7 @@ import socketService from './quizzy/services/socketService';
 import userService from './quizzy/services/userService';
 import eventEmitter from './quizzy/services/eventEmitter';
 import toastService from './quizzy/services/toastService';
+import onlineUsersService from './quizzy/services/onlineUsersService';
 
 angular
   .module('quizzy', [
@@ -56,4 +57,5 @@ angular
   .service('socketService', socketService)
   .service('eventEmitter', eventEmitter)
   .service('toastService', toastService)
+  .service('onlineUsersService', onlineUsersService)
   .directive(spinner.name, spinner);

@@ -3,7 +3,7 @@
 import Firebase from './firebaseService';
 
 class EventEmitter {
-  constructor($rootScope, headerService, authService, userService) {
+  constructor($rootScope, headerService, authService, userService, onlineUsersService) {
     $rootScope.$on('user:authorized', () => {
       headerService.onUserAuthorized();
     });
@@ -22,6 +22,18 @@ class EventEmitter {
 
     $rootScope.$on('env:data:loaded', (e, env) => {
       Firebase.init(env);
+    });
+
+    $rootScope.$on('onlineUsers:added', (e, data) => {
+      onlineUsersService.onOnlineUserAdded(data);
+    });
+
+    $rootScope.$on('onlineUsers:removed', (e, onlineUser) => {
+      onlineUsersService.onOnlineUserRemoved(onlineUser);
+    });
+
+    $rootScope.$on('onlineUsers:updated', (e, onlineUser) => {
+      onlineUsersService.onOnlineUserUpdated(onlineUser);
     });
   }
 }

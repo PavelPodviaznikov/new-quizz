@@ -1,9 +1,7 @@
 .category-page-title {
   color: #fff;
   font-size: 36px;
-
   font-weight: bold;
-  margin-bottom: 30px;
 }
 
 .game-container md-card {
@@ -12,6 +10,10 @@
   background: #000;
   border: 2px solid #fff;
   color: #fff;
+}
+
+.game-container .header .online-users {
+  margin: 10px 0;
 }
 
 .answers-container md-card {

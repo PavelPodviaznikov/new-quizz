@@ -7,13 +7,15 @@ let _http = new WeakMap();
 let _userService = new WeakMap();
 let _authService = new WeakMap();
 let _toastService = new WeakMap();
+let _socketService = new WeakMap();
 
 class SignInService {
-  constructor($http, userService, authService, toastService) {
+  constructor($http, userService, authService, toastService, socketService) {
     _http.set(this, $http);
     _userService.set(this, userService);
     _authService.set(this, authService);
     _toastService.set(this, toastService);
+    _socketService.set(this, socketService);
   }
 
   signIn(user) {
@@ -30,7 +32,7 @@ class SignInService {
 
   signInWithGoogle() {
     spinner.toggle();
-    
+
     Firebase.googleAuth()
       .then(googleUser => {
         console.log(googleUser);
@@ -71,6 +73,7 @@ function onAuthorizationSuccess(response) {
 
   _authService.get(this).closeDialog();
   _userService.get(this).setActiveUser(response.data);
+  _socketService.get(this).socket.emit('user:authorized', response.data);
 }
 
 export default SignInService;

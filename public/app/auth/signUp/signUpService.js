@@ -4,11 +4,12 @@ import Firebase from '../../quizzy/services/firebaseService';
 import spinner from '../../quizzy/directives/spinner/Spinner';
 
 class SignUpService {
-  constructor($http, userService, authService, toastService) {
+  constructor($http, userService, authService, toastService, socketService) {
     this._$http = $http;
     this._authService = authService;
     this._userService = userService;
     this._toastService = toastService;
+    this._socketService = socketService;
   }
 
   signUp(form, user) {
@@ -70,6 +71,7 @@ function onUserRegisterSuccess(response) {
 
   this._authService.closeDialog();
   this._userService.setActiveUser(response.data);
+  this._socketService.socket.emit('user:authorized', response.data);
 }
 
 function onUserRegisterFail(err) {
