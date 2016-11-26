@@ -1,0 +1,33 @@
+<md-content class="md-padding" layout="column" flex>
+  <form name="signUpForm">
+    <md-input-container layout="row" flex>
+      <label>Name</label>
+      <input ng-model="user.name">
+    </md-input-container>
+    <md-input-container layout="row" flex>
+      <label>Surname</label>
+      <input ng-model="user.surname">
+    </md-input-container>
+    <md-input-container class="md-block" layout="row" flex>
+      <label>Email</label>
+      <input name="email" ng-model="user.email" required>
+      <div ng-messages="signUpForm.email.$error">
+        <div ng-message="required">This is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block" layout="row" flex>
+      <label>Paswword</label>
+      <input name="password" type="password" ng-model="user.password" required>
+      <div ng-messages="signUpForm.password.$error">
+        <div ng-message="required">This is required.</div>
+      </div>
+    </md-input-container>
+    <div layout="row" layout-align="start center" flex>
+      <md-button ng-click="signUp(signUpForm, user)" ng-disabled="signUpForm.$invalid">
+        Sign up
+      </md-button>
+      <span flex></span>
+      <google-icon ng-click="signUpWithGoogle()"></google-icon>
+    </div>
+  </form>
+</md-content>

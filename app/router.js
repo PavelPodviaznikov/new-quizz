@@ -1,16 +1,28 @@
 'use strict';
 
-let questions = require('./questions');
+let bodyParser = require('body-parser');
+
+let firebase = require('./firebase');
+let Auth = require('./controllers/AuthController');
 
 function router(app) {
-    app.get('/category', (req, res) => {
-        let questionsCollection = questions.getThemeQuestions(req.query.categoryName);
-        res.send(questionsCollection);
-    });
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get('/themes', (req, res) => {
         res.send([{ name: 'Capitals', value: 'capitals' }]);
     });
+
+    app.get('/env', (req, res) => {
+      res.send(firebase.config);
+    });
+
+    app.post('/user', Auth.registerUser);
+    app.post('/user-google', Auth.registerUserWithGoogle);
+
+    app.get('/user', Auth.authorizeUser);
+    app.get('/user-google', Auth.authorizeUserWithGoogle)
 }
 
 module.exports = router;

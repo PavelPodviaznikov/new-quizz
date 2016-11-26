@@ -1,13 +1,13 @@
-
+require("dotenv").config();
 
 module.exports = {
-  entry: "./app/quizzy.js",
+  entry: "./public/app/quizzy.js",
   output: {
     path: __dirname + '/build',
     publicPath: '/build/',
     filename: 'bundle.js'
   },
-  watch: true,
+  watch: process.env.IS_DEV,
   watchOptions: {
     aggregateTimeout: 100
   },
@@ -18,7 +18,7 @@ module.exports = {
       { test: /\.html$/, loader: 'raw' },
       {
         test: /\.js?$/,
-        include: __dirname + '\\app',
+        include: __dirname + (process.env.WINDOWS ? '\\app' : '/app'),
         loader: 'babel', // 'babel-loader' is also a legal name to reference
         query: {
           cacheDirectory: true,

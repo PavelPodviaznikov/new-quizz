@@ -9,3 +9,38 @@ body {
     height: 100%;
     margin: 0 auto;
 }
+
+.md-errors-spacer {
+  display: none;
+}
+
+.white-btn-with-border {
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+md-card:focus {
+  outline: none;
+}
+
+.bg-yellow {
+  background-color: #e6e600!important;
+}
+
+md-toast {
+  min-width: 120px!important;
+}
+
+.toast-success {
+  background-color: green;
+}
+
+.toast-fail {
+  padding: 0;
+  top: 5px!important;
+  right: 5px!important;
+}
+
+.toast-fail .md-toast-content {
+  background-color: red;
+}

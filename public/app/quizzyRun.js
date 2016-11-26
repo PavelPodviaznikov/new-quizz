@@ -2,9 +2,10 @@
 
 export default quizzyRun;
 
-quizzyRun.$inject = ['$rootScope'];
+function quizzyRun($rootScope, socketService, eventEmitter, quizzyService) {
+  'ngInject';
 
-function quizzyRun($rootScope) {
+  quizzyService.loadEnvData();
 
   $rootScope.$on('$stateChangeStart', function() {
 

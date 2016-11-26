@@ -2,9 +2,9 @@
 
 export default quizzyRouter;
 
-quizzyRouter.$inject = ['$urlRouterProvider', '$stateProvider'];
-
 function quizzyRouter($urlRouterProvider, $stateProvider) {
+  'ngInject';
+
   $urlRouterProvider.otherwise('/welcome');
 
   $stateProvider
@@ -14,7 +14,8 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
       views: {
         'content': {
           template: require('./welcome/welcome.html'),
-          controller: 'WelcomeCtrl'
+          controller: 'WelcomeCtrl',
+          controllerAs: 'welcome'
         }
       }
     })
@@ -24,11 +25,15 @@ function quizzyRouter($urlRouterProvider, $stateProvider) {
       views: {
         'content': {
           template: require('./category/category.html'),
-          controller: 'CategoryCtrl'
+          controller: 'CategoryCtrl',
+          controllerAs: 'categoryCtrl'
         }
       },
       onEnter($stateParams, categoryService) {
-        categoryService.loadCategory($stateParams.name);
+        categoryService.init($stateParams.name);
+      },
+      onExit(categoryService) {
+        categoryService.onCategoryLeave();
       }
     });
 }

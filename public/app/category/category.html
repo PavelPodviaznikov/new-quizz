@@ -1,9 +1,56 @@
-<div class="category-page-title" layout="row" layout-align="center center">
-  <span ng-bind="category.name"></span>
-</div>
-
 <div class="game-container" layout="row" flex>
   <md-card>
-
+    <div class="header md-padding" layout="row">
+      <div layout="column" flex>
+        <div layout="row" flex>
+          <span class="md-headline">Score:
+            <span class="correct" ng-bind="categoryCtrl.score.correct"></span> |
+            <span class="incorrect" ng-bind="categoryCtrl.score.incorrect"></span>
+          </span>
+          <span flex></span>
+          <span class="md-headline" ng-bind="categoryCtrl.category.name"></span>
+          <span flex></span>
+          <span class="md-headline">Time:
+            <span ng-bind="categoryCtrl.question.time" ng-class="{'timing': categoryCtrl.question.time <= 5}"></span>
+          </span>
+        </div>
+        <div layout="row" class="online-users">
+          <span>Users online: <span ng-bind="categoryCtrl.onlineUsers.length"></span></span>
+        </div>
+      </div>
+    </div>
+    <div class="question-container md-padding" layout="row" layout-align="center center">
+      <span class="md-headline">What is a capital of "{{categoryCtrl.question.name}}"</span>
+    </div>
+    <div class="answers-container md-padding" layout="row" flex>
+      <div class="left-column" layout="column" flex>
+        <md-card
+          layout="row"
+          layout-align="center center"
+          ng-click="categoryCtrl.makeAnswer(categoryCtrl.question.answers[0])"
+          ng-bind="categoryCtrl.question.answers[0]">
+        </md-card>
+        <md-card
+          layout="row"
+          layout-align="center center"
+          ng-click="categoryCtrl.makeAnswer(categoryCtrl.question.answers[1])"
+          ng-bind="categoryCtrl.question.answers[1]">
+        </md-card>
+      </div>
+      <div class="right-column" layout="column" flex>
+        <md-card
+          layout="row"
+          layout-align="center center"
+          ng-click="categoryCtrl.makeAnswer(categoryCtrl.question.answers[2])"
+          ng-bind="categoryCtrl.question.answers[2]">
+        </md-card>
+        <md-card
+          layout="row"
+          layout-align="center center"
+          ng-click="categoryCtrl.makeAnswer(categoryCtrl.question.answers[3])"
+          ng-bind="categoryCtrl.question.answers[3]">
+        </md-card>
+      </div>
+    </div>
   </md-card>
 </div>

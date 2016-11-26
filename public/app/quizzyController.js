@@ -1,9 +1,9 @@
 'use strict';
 
-export default QuizzyController;
-
-QuizzyController.$inject = ['$scope'];
-
-function QuizzyController($scope) {
-
+function QuizzyController($state, $rootScope) {
+  this.onBodyClick = () => {
+    $rootScope.$emit('hide:menu');
+  };
 }
+
+export default QuizzyController;

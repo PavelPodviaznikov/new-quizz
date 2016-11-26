@@ -1,0 +1,17 @@
+.auth-dialog {
+  width: 400px;
+}
+
+.auth-dialog md-dialog-content {
+  position: relative;
+  font-size: 20px;
+}
+
+.auth-dialog md-content {
+  background: #fff;
+}
+
+.auth-dialog md-content button {
+  border: 1px solid #ccc;
+  margin: 0
+}
