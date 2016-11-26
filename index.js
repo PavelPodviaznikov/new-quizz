@@ -2,7 +2,11 @@
 
 require("dotenv").config();
 
-const PORT = process.env.$PORT || process.env.SERVER_PORT || 3000;
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3000;
+
+console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+console.log(PORT);
+console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
 let express = require('express');
 let app = express();
