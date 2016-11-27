@@ -39,23 +39,24 @@ module.exports = {
   },
   resetActiveQuestion() {
     categories.capitals.activeQuestion = null;
+    if(interval) clearInterval(interval);
   }
 };
 
 function updateUserStatistic(config) {
   let socket = this;
 
-  firebase.updateScore(util.encodeKey(config.email), checkAnswer(config.answer, config.category))
-    .then(score => {
+  if(!config.email) return false;
+
+  firebase.updateScore(util.encodeKey(config.email), config.score)
+    .then(() => {
       let scores = {};
       scores[config.email] = score;
       socket.emit('room:answer:checked', scores);
     });
 }
 
-function checkAnswer(answer, category) {
-  return answer === categories[category].activeQuestion.answer;
-}
+
 
 function generateQuestion(category) {
   let questions = getAllQuestionsByTheme(category),

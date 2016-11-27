@@ -81,17 +81,8 @@ function getUsersScore(email) {
     });
 }
 
-function updateScore(email, isCorectAnswer) {
-  return firebase.database().ref('users/' + email + '/score').once('value')
-    .then(snapshot => {
-      let score = snapshot.val();
-
-      isCorectAnswer ? score.correct++ : score.incorrect++;
-
-      firebase.database().ref('users/' + email + '/score').update(score);
-
-      return score;
-    });
+function updateScore(email, score) {
+  return firebase.database().ref('users/' + email + '/score').update(score);
 }
 
 //
