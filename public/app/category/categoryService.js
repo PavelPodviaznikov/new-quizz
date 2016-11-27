@@ -29,9 +29,11 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   };
 
   self.makeAnswer = answer => {
+    checkAnswer(answer) ? user.score.correct++ : user.score.incorrect++;
+
     socket.emit('room:answer', {
       category: self.category.name.toLowerCase(),
-      answer: answer,
+      score: user.score,
       email: user.email
     });
   };
@@ -57,11 +59,14 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   }
 
   function onAnswerChecked (scores) {
-    console.log(scores);
     let score = scores[user.email];
 
     self.score.correct = score.correct;
     self.score.incorrect = score.incorrect;
+  }
+
+  function checkAnswer(answer) {
+    return answer === self.question.answer;
   }
 
   // let socket = socketService.socket;
