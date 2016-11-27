@@ -36,6 +36,9 @@ module.exports = {
         categories[category].activeQuestion = null;
       }
     }
+  },
+  resetActiveQuestion() {
+    categories.capitals.activeQuestion = null;
   }
 };
 

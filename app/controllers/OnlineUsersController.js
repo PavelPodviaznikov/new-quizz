@@ -1,5 +1,7 @@
 'use strict';
 
+let categoryService = require('../category');
+
 let onlineUsers = {};
 
 module.exports = {
@@ -15,6 +17,8 @@ module.exports = {
     socket.broadcast.emit('onlineUsers:removed', onlineUsers[socket.id]);
 
     delete onlineUsers[socket.id];
+
+    if(!Object.keys(onlineUsers).length) categoryService.resetActiveQuestion();
   },
   updateOnlineUser(user, socket) {
     if(onlineUsers[socket.id]) {
