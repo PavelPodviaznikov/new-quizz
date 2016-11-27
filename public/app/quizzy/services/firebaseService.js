@@ -20,6 +20,10 @@ class Firebase {
   static logout() {
     return firebase.auth().signOut();
   }
+
+  static checkUserAuth(callback) {
+    firebase.auth().onAuthStateChanged(callback);
+  }
 }
 
 export default Firebase;

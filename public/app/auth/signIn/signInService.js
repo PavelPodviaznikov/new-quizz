@@ -34,18 +34,22 @@ class SignInService {
     spinner.toggle();
 
     Firebase.googleAuth()
-      .then(googleUser => {
-        console.log(googleUser);
-
-        let user = {
-          email: googleUser.user.email,
-          token: googleUser.credential.idToken
-        };
-
-        return signInWithGoogle.call(this, user);
-      })
+      .then(this.authorizeGoogleUser.bind(this))
       .then(onAuthorizationSuccess.bind(this))
       .catch(onAuthorizationFail.bind(this));
+  }
+
+  authorizeGoogleUser(googleUser) {
+    if(googleUser.credential.idToken) {
+      localStorage.setItem('idToken', googleUser.credential.idToken);
+    }
+
+    let user = {
+      email: googleUser.user.email || googleUser.email,
+      token: googleUser.credential.idToken || localStorage.getItem('idToken')
+    };
+
+    return signInWithGoogle.call(this, user);
   }
 }
 
