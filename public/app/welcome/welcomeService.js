@@ -4,7 +4,7 @@ export default welcomeService;
 
 function welcomeService($state) {
   'ngInject';
-  
+
   var self = {};
 
   self.categories = [
@@ -16,6 +16,16 @@ function welcomeService($state) {
       state: {
         name: 'category',
         param: 'capitals'
+      }
+    },
+    {
+      name: 'Countries',
+      value: 'countries',
+      playersOnline: 0,
+      img: '../../img/countries.png',
+      state: {
+        name: 'category',
+        param: 'countries'
       }
     }
   ];

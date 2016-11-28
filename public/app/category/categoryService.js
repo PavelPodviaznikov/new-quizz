@@ -11,7 +11,8 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   let user = userService.getActiveUser();
 
   self.category = {
-    name: ''
+    name: '',
+    value: ''
   };
 
   self.onlineUsers = onlineUsersService.onlineUsers;
@@ -21,6 +22,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   self.score = user.score;
 
   self.init = category => {
+    self.category.value = category;
     self.category.name = category.toUpperCase();
 
     socket.emit('room:joined', {category, user});
@@ -39,21 +41,38 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   };
 
   self.onCategoryLeave = () => {
-    socket.emit('room:leave');
+    socket.emit('room:leave', self.category.name.toLowerCase());
   };
 
   function onQuestionLoaded(question) {
-    if(!question) return false;
+    if(!question || question.category !== self.category.value) return false;
+
 
     Object.assign(self.question, question);
-    startTimer();
+    startTimer(question.seconds);
     $rootScope.$apply();
   }
 
-  function startTimer() {
+  function startTimer(seconds) {
     if(interval) $interval.cancel(interval);
 
+    let currentSeconds = new Date().getSeconds();
+
+    if(currentSeconds >= seconds) {
+      self.question.time = 15 - (currentSeconds - seconds);
+    } else {
+      self.question.time = 15 - (60 - (seconds + currentSeconds));
+    }
+
     interval = $interval(()=>{
+      if(self.question.time === 0) {
+        socket.emit('room:answer', {
+          category: self.category.name.toLowerCase(),
+          score: user.score,
+          email: user.email
+        });
+      }
+
       self.question.time--;
     }, 1000);
   }

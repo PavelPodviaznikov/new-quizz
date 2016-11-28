@@ -20,7 +20,8 @@
       </div>
     </div>
     <div class="question-container md-padding" layout="row" layout-align="center center">
-      <span class="md-headline">What is a capital of "{{categoryCtrl.question.name}}"</span>
+      <span ng-if="categoryCtrl.category.value === 'capitals'" class="md-headline">What is a capital of "{{categoryCtrl.question.name}}"</span>
+      <img ng-if="categoryCtrl.category.value === 'countries'" src="{{categoryCtrl.question.flag}}" alt="categoryCtrl.question.answer">
     </div>
     <div class="answers-container md-padding" layout="row" flex>
       <div class="left-column" layout="column" flex>

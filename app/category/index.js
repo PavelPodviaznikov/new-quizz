@@ -5,10 +5,12 @@ let countries = require('../themes/countries/countries.json');
 let util = require('../util');
 let firebase = require('../firebase');
 
-let interval;
-
 let categories = {
   capitals: {
+    activeQuestion: null,
+    leaderboard: {}
+  },
+  countries: {
     activeQuestion: null,
     leaderboard: {}
   }
@@ -22,8 +24,6 @@ module.exports = {
     } else {
       generateQuestion.call(this, category);
     }
-
-    generateCountriesQuestion();
   },
   checkAnswer(config) {
     updateUserStatistic.call(this, config);
@@ -40,9 +40,10 @@ module.exports = {
       }
     }
   },
-  resetActiveQuestion() {
-    categories.capitals.activeQuestion = null;
-    if(interval) clearInterval(interval);
+  resetActiveQuestion(category) {
+    if(!category) category = 'capitals';
+
+    categories[category].activeQuestion = null;
   }
 };
 
@@ -64,14 +65,27 @@ function generateCountriesQuestion() {
   let country = countries[countryKey];
 
   let pathToImg = `./app/themes/countries/img/${countryKey.toLowerCase()}.png`;
-  let img = util.encodeToBase64(pathToImg);
+  let flag = util.encodeToBase64(pathToImg);
+
+  let question = {
+    flag: `data:image/png;base64, ${flag}`,
+    answer: country,
+    answers: [country]
+  };
+
+  for(let i=0; i<3; i++) {
+    question.answers.push(countries[Object.keys(countries)[util.getRandomInt(0, Object.keys(countries).length)]]);
+  }
+
+  return question;
 }
 
-function generateQuestion(category) {
-  let questions = getAllQuestionsByTheme(category),
-      question = questions[util.getRandomInt(0, questions.length)];
+function generateCapitalsQuestion() {
+  let questions = capitals.map(item => {
+    return {name: item.country, answer: item.capital};
+  });
 
-  if(interval) clearInterval(interval);
+  let question =  questions[util.getRandomInt(0, questions.length)];
 
   question.answers = [ question.answer ];
 
@@ -79,36 +93,27 @@ function generateQuestion(category) {
     question.answers.push(questions[util.getRandomInt(0, questions.length)].answer);
   }
 
+  return question;
+}
+
+function generateQuestion(category) {
+  let question;
+
+  switch (category) {
+    case 'capitals':
+      question = generateCapitalsQuestion();
+      break;
+    case 'countries':
+      question = generateCountriesQuestion();
+      break;
+  }
+
   question.answers = util.shuffle(question.answers);
+  question.seconds = new Date().getSeconds();
+  question.category = category;
 
   categories[category].activeQuestion = Object.assign({}, question);
 
-  setQuestionTimeLife.call(this, categories[category].activeQuestion, category);
-
   this.emit('room:question', categories[category].activeQuestion);
   this.broadcast.emit('room:question', categories[category].activeQuestion);
-}
-
-function setQuestionTimeLife(question, category) {
-  question.time = 15;
-  interval = setInterval(()=>{
-    if(question.time === 0) {
-      generateQuestion.call(this, category);
-    }
-    question.time--;
-  }, 1000);
-}
-
-
-function getAllQuestionsByTheme(theme) {
-  switch (theme) {
-    case 'capitals':
-      return capitals.map(item => {
-        return {name: item.country, answer: item.capital};
-      });
-    case 'countries':
-      return countries;
-    default:
-      return [];
-  }
 }

@@ -21,8 +21,8 @@ function socket(http) {
        OnlineUsers.addOnlineUser(data.user, socket);
     });
 
-    socket.on('room:leave', () => {
-      OnlineUsers.removeOnlineUser(socket);
+    socket.on('room:leave', (category) => {
+      OnlineUsers.removeOnlineUser(socket, category);
     });
 
     socket.on('user:authorized', user => {

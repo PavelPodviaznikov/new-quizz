@@ -14,20 +14,22 @@
     height: 100%;
 }
 
-.categories-list-container md-card div {
+.categories-list-container md-card .darker {
     position: absolute;
-    height: 200px;
     width: 100%;
-    line-height: 200px;
+    height: 100%;
     background-color: #000000;
     opacity: 0.85;
-    color: #fff;
-    text-align: center;
-    font-size: 32px;
+    cursor: pointer;
 }
 
-.categories-list-container md-card div:hover {
+.categories-list-container md-card .category-name {
+  position: absolute;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.categories-list-container md-card .darker:hover {
     opacity: 0.5;
-    cursor: pointer;
-    color: #fff;
 }
