@@ -35,7 +35,14 @@ function setDefaultData() {
   this.surname = '';
   this.email = '';
   this.photo = null;
-  this.score = {
+
+  this.score ?
+    Object.assign(this.score, getNullScore()) :
+    this.score = getNullScore();
+}
+
+function getNullScore() {
+  return {
     correct: 0,
     incorrect: 0
   };
