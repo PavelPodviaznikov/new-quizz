@@ -1,5 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-/node_modules/
-/public/bower_components/
 /public/build/
 /public/webpack-assets.json
+.idea/
