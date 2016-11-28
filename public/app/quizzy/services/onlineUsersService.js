@@ -7,6 +7,7 @@ class OnlineUsersService {
     this._onlineUsers = {};
 
     Object.defineProperty(this._onlineUsers, 'length', {
+      value: 1,
       enumerable: false,
       writable: true
     });
