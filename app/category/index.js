@@ -1,6 +1,7 @@
 'use strict';
 
-let capitals = require('./themes/capitals.json');
+let capitals = require('../themes/capitals.json');
+let countries = require('../themes/countries/countries.json');
 let util = require('../util');
 let firebase = require('../firebase');
 
@@ -21,6 +22,8 @@ module.exports = {
     } else {
       generateQuestion.call(this, category);
     }
+
+    generateCountriesQuestion();
   },
   checkAnswer(config) {
     updateUserStatistic.call(this, config);
@@ -56,7 +59,13 @@ function updateUserStatistic(config) {
     });
 }
 
+function generateCountriesQuestion() {
+  let countryKey = Object.keys(countries)[util.getRandomInt(0, Object.keys(countries).length)];
+  let country = countries[countryKey];
 
+  let pathToImg = `./app/themes/countries/img/${countryKey.toLowerCase()}.png`;
+  let img = util.encodeToBase64(pathToImg);
+}
 
 function generateQuestion(category) {
   let questions = getAllQuestionsByTheme(category),
@@ -97,6 +106,8 @@ function getAllQuestionsByTheme(theme) {
       return capitals.map(item => {
         return {name: item.country, answer: item.capital};
       });
+    case 'countries':
+      return countries;
     default:
       return [];
   }
