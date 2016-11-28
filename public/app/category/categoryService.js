@@ -41,12 +41,11 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   };
 
   self.onCategoryLeave = () => {
-    socket.emit('room:leave', self.category.name.toLowerCase());
+    socket.emit('room:leave', self.category.value);
   };
 
   function onQuestionLoaded(question) {
     if(!question || question.category !== self.category.value) return false;
-
 
     Object.assign(self.question, question);
     startTimer(question.seconds);

@@ -18,7 +18,7 @@ function socket(http) {
 
     socket.on('room:joined', (data) => {
        categoryService.generateQuestion.call(socket, data.category);
-       OnlineUsers.addOnlineUser(data.user, socket);
+       OnlineUsers.addOnlineUser(data.user, data.category, socket);
     });
 
     socket.on('room:leave', (category) => {

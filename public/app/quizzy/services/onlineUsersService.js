@@ -20,6 +20,8 @@ class OnlineUsersService {
   onOnlineUserAdded({users, user}) {
     if(!user) return false;
 
+    console.log(users);
+
     Object.assign(this._onlineUsers, users);
     updateOnlineUsersLength(this._onlineUsers);
   }
@@ -40,7 +42,7 @@ class OnlineUsersService {
 }
 
 function updateOnlineUsersLength(onlineUsers) {
-  onlineUsers.length = Object.keys(onlineUsers).length;
+  onlineUsers.length = Object.keys(onlineUsers).length || 1;
 }
 
 export default OnlineUsersService;
