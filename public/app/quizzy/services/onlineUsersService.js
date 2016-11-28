@@ -4,13 +4,10 @@ import util from '../../util';
 
 class OnlineUsersService {
   constructor() {
-    this._onlineUsers = {};
-
-    Object.defineProperty(this._onlineUsers, 'length', {
-      value: 1,
-      enumerable: false,
-      writable: true
-    });
+    this._onlineUsers = {
+      capitals: {length: 1},
+      countries: {length: 1}
+    };
   }
 
   get onlineUsers() {
@@ -20,29 +17,32 @@ class OnlineUsersService {
   onOnlineUserAdded({users, user}) {
     if(!user) return false;
 
-    console.log(users);
+    for(let category in users) {
+      Object.assign(this._onlineUsers[category], users[category]);
+    }
 
-    Object.assign(this._onlineUsers, users);
     updateOnlineUsersLength(this._onlineUsers);
   }
 
-  onOnlineUserRemoved(user) {
+  onOnlineUserRemoved({user, category}) {
     if(!user) return false;
 
-    delete this._onlineUsers[user.connectionId];
+    delete this._onlineUsers[category][user.connectionId];
     updateOnlineUsersLength(this._onlineUsers);
   }
 
-  onOnlineUserUpdated(user) {
+  onOnlineUserUpdated({user, category}) {
     if(!user) return false;
 
-    Object.assign(this._onlineUsers[user.connectionId], user);
+    Object.assign(this._onlineUsers[category][user.connectionId], user);
     updateOnlineUsersLength(this._onlineUsers);
   }
 }
 
 function updateOnlineUsersLength(onlineUsers) {
-  onlineUsers.length = Object.keys(onlineUsers).length || 1;
+  for(let category in onlineUsers) {
+    onlineUsers[category].length = Object.keys(onlineUsers[category]).length - 1 || 1;
+  }
 }
 
 export default OnlineUsersService;
