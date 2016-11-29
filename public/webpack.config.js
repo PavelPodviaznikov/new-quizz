@@ -1,11 +1,19 @@
+'use strict';
+
+let path = require('path');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 require("dotenv").config();
 
 module.exports = {
-  entry: "./public/app/quizzy.js",
+  entry: {
+    bundle: "./public/app/quizzy.js"
+  },
   output: {
     path: __dirname + '/build',
     publicPath: '/build/',
-    filename: 'bundle.js'
+    filename: '[name].js',
+    library: '[name]'
   },
   watch: process.env.IS_DEV,
   watchOptions: {
@@ -13,7 +21,6 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style!css" },
       { test: /\.(ttf|eot|woff|woff2|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file?name=[path][name].[ext]" },
       { test: /\.html$/, loader: 'raw' },
       {
@@ -27,6 +34,14 @@ module.exports = {
         }
       },
       {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract('style-loader', 'css-loader!resolve-url!sass-loader?sourceMap')
+      },
+      {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
+      {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
@@ -34,5 +49,10 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+        new ExtractTextPlugin('styles.css', {
+            allChunks: true
+        })
+    ]
 };

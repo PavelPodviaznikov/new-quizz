@@ -15,7 +15,7 @@ import 'angular-messages';
 import 'angular-material/angular-material.min.css';
 
 /* App styles */
-import './quizzy.css';
+import './quizzy.scss';
 
 /* App modules */
 import QuizzyCtrl from './quizzyController';
