@@ -1,3 +1,5 @@
+@import "../scss/colors";
+
 body {
     background: url("../img/background.jpg");
     background-size: cover;
@@ -15,8 +17,8 @@ body {
 }
 
 .white-btn-with-border {
-  color: #fff;
-  border: 1px solid #fff;
+  color: $white;
+  border: 1px solid $white;
 }
 
 md-card:focus {
@@ -24,7 +26,7 @@ md-card:focus {
 }
 
 .bg-yellow {
-  background-color: #e6e600!important;
+  background-color: $yellow!important;
 }
 
 md-toast {
@@ -32,7 +34,7 @@ md-toast {
 }
 
 .toast-success {
-  background-color: green;
+  background-color: $green;
 }
 
 .toast-fail {
@@ -42,5 +44,5 @@ md-toast {
 }
 
 .toast-fail .md-toast-content {
-  background-color: red;
+  background-color: $red;
 }
