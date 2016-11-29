@@ -65,10 +65,10 @@ function generateCountriesQuestion() {
   let country = countries[countryKey];
 
   let pathToImg = `./app/themes/countries/img/${countryKey.toLowerCase()}.png`;
-  let flag = util.encodeToBase64(pathToImg);
+  let flag = `data:image/png;base64, ${util.encodeToBase64(pathToImg)}`;
 
   let question = {
-    flag: `data:image/png;base64, ${flag}`,
+    flag: flag,
     answer: country,
     answers: [country]
   };

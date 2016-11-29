@@ -2,6 +2,8 @@
 
 export default categoryService;
 
+import util from '../util';
+
 function categoryService($http, $stateParams, $interval, $rootScope, socketService, userService, onlineUsersService) {
   'ngInject';
 
@@ -15,8 +17,6 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
     value: ''
   };
 
-  self.onlineUsers = onlineUsersService.onlineUsers;
-
   self.question = { };
 
   self.score = user.score;
@@ -24,6 +24,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   self.init = category => {
     self.category.value = category;
     self.category.name = category.toUpperCase();
+    self.onlineUsers = onlineUsersService.onlineUsers[category];
 
     socket.emit('room:joined', {category, user});
     socket.on('room:question', onQuestionLoaded);
@@ -46,7 +47,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
 
   function onQuestionLoaded(question) {
     if(!question || question.category !== self.category.value) return false;
-
+    
     Object.assign(self.question, question);
     startTimer(question.seconds);
     $rootScope.$apply();
