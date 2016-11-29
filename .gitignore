@@ -1,6 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 /public/build/
-/public/webpack-assets.json
 .idea/
 /node_modules/
 .env
