@@ -2,3 +2,4 @@
 /public/build/
 /public/webpack-assets.json
 .idea/
+/node_modules/
