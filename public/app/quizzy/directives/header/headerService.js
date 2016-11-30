@@ -9,6 +9,10 @@ class HeaderService {
     this.menu = {
       isOpened: false
     };
+
+    this.conditions = {
+      isCheckingAuth: true
+    };
   }
 
   closeMenu() {
@@ -16,6 +20,8 @@ class HeaderService {
   }
 
   onUserAuthorized() {
+    debugger;
+    this.conditions.isCheckingAuth = false;
     console.log(this.user);
   }
 

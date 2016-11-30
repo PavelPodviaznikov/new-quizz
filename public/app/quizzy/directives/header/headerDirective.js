@@ -10,6 +10,7 @@ function quizzyHeader() {
     controller($rootScope, $scope, $state, headerService) {
       $scope.user = headerService.user;
       $scope.menu = headerService.menu;
+      $scope.conditions = headerService.conditions;
 
       $scope.toggleMenu = (event) => {
         event.stopPropagation();

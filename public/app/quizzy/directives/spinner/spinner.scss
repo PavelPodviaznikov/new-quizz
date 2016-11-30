@@ -7,6 +7,11 @@
   background: rgba(255,255,255, 0.7);
 }
 
+.spinner-transparent {
+  @extend .spinner;
+  background: transparent;
+}
+
 @mixin circle-transform($rotate) {
   -webkit-transform: rotate($rotate);
       -ms-transform: rotate($rotate);
