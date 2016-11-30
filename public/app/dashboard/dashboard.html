@@ -1,7 +1,11 @@
 <div class="categories-list-container" layout="row" flex>
-    <md-card ng-repeat="category in dashboard.categories" ng-click="dashboard.openCategoryPage(category)" layout="row" layout-align="center center">
-        <div class="darker"></div>
-        <div class="category-name" ng-bind="category.name"></div>
+    <md-card ng-repeat="category in dashboard.categories" ng-click="category.onClick()">
+        <div class="category-name" layout="row" layout-align="center center">
+          <span ng-bind="category.name"></span>
+        </div>
+        <div class="online-users">
+          <span>Online users: {{category.playersOnline.length}}</span>
+        </div>
         <img ng-src="{{category.img}}" alt="{{category.name}}">
     </md-card>
 </div>

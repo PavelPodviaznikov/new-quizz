@@ -1,6 +1,6 @@
 'use strict';
 
-import './dashboard.css';
+import './dashboard.scss';
 
 import dashboardCtrl from './dashboardCtrl';
 import dashboardService from './dashboardService';

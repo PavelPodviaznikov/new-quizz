@@ -2,7 +2,7 @@
 
 export default dashboardService;
 
-function dashboardService($state) {
+function dashboardService($state, onlineUsersService) {
   'ngInject';
 
   var self = {};
@@ -11,27 +11,21 @@ function dashboardService($state) {
     {
       name: 'Capitals',
       value: 'capitals',
-      playersOnline: 0,
+      playersOnline: onlineUsersService.onlineUsers.capitals,
       img: '../../img/capitals.jpg',
-      state: {
-        name: 'category',
-        param: 'capitals'
-      }
+      onClick: redirectToCategoryPage
     },
     {
       name: 'Countries',
       value: 'countries',
-      playersOnline: 0,
+      playersOnline: onlineUsersService.onlineUsers.countries,
       img: '../../img/countries.png',
-      state: {
-        name: 'category',
-        param: 'countries'
-      }
+      onClick: redirectToCategoryPage
     }
   ];
 
-  self.openCategoryPage = category => {
-    $state.go(category.state.name, {name: category.state.param, category: category});
+  function redirectToCategoryPage() {
+    $state.go('category', {name: this.value});
   };
 
   return self;
