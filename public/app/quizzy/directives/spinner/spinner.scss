@@ -1,0 +1,121 @@
+.spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255,255,255, 0.7);
+}
+
+@mixin circle-transform($rotate) {
+  -webkit-transform: rotate($rotate);
+      -ms-transform: rotate($rotate);
+          transform: rotate($rotate);
+}
+
+@mixin circle-animation-delay($delay) {
+  -webkit-animation-delay: $delay;
+          animation-delay: $delay;
+}
+
+.sk-fading-circle {
+  width: 50px;
+  height: 50px;
+  position: relative;
+
+  .sk-circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      margin: 0 auto;
+      width: 15%;
+      height: 15%;
+      background-color: #333;
+      border-radius: 100%;
+      -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+              animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+    }
+  }
+  .sk-circle2 {
+    @include circle-transform(30deg);
+    &:before {
+      @include circle-animation-delay(-1.1s);
+    }
+  }
+  .sk-circle3 {
+    @include circle-transform(60deg);
+    &:before {
+      @include circle-animation-delay(-1s);
+    }
+  }
+  .sk-circle4 {
+    @include circle-transform(90deg);
+    &:before {
+      @include circle-animation-delay(-0.9s);
+    }
+  }
+  .sk-circle5 {
+    @include circle-transform(120deg);
+    &:before {
+      @include circle-animation-delay(-0.8s);
+    }
+  }
+  .sk-circle6 {
+    @include circle-transform(150deg);
+    &:before {
+      @include circle-animation-delay(-0.7s);
+    }
+  }
+  .sk-circle7 {
+    @include circle-transform(180deg);
+    &:before {
+      @include circle-animation-delay(-0.6s);
+    }
+  }
+  .sk-circle8 {
+    @include circle-transform(210deg);
+    &:before {
+      @include circle-animation-delay(-0.5s);
+    }
+  }
+  .sk-circle9 {
+    @include circle-transform(240deg);
+    &:before {
+      @include circle-animation-delay(-0.4s);
+    }
+  }
+  .sk-circle10 {
+   @include circle-transform(270deg);
+   &:before {
+     @include circle-animation-delay(-0.3s);
+   }
+ }
+ .sk-circle11 {
+   @include circle-transform(300deg);
+   &:before {
+     @include circle-animation-delay(-0.2s);
+   }
+ }
+ .sk-circle12 {
+   @include circle-transform(330deg);
+   &:before {
+     @include circle-animation-delay(-0.1s);
+   }
+ }
+}
+
+@-webkit-keyframes sk-circleFadeDelay {
+  0%, 39%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+@keyframes sk-circleFadeDelay {
+  0%, 39%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}

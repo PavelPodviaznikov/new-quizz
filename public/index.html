@@ -30,7 +30,6 @@
     fetch('webpack-assets.json').then(function(response) {
         return response.json()
     }).then(function(data) {
-      console.log(data);
         var newScript = document.createElement('script');
         newScript.src = data.main.js;
         document.body.appendChild(newScript);
