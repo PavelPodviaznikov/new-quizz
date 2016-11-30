@@ -18,12 +18,6 @@
   position: relative;
 }
 
-.header .checking-user-auth {
-  position: relative;
-  height: inherit;
-  width: 50px;
-}
-
 .header .active-user .user-name {
   color: #fff;
   margin: 0 10px;

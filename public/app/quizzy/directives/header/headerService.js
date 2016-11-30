@@ -20,9 +20,7 @@ class HeaderService {
   }
 
   onUserAuthorized() {
-    debugger;
     this.conditions.isCheckingAuth = false;
-    console.log(this.user);
   }
 
 }

@@ -26,8 +26,16 @@ class EventEmitter {
         if(user) {
           user = {user: user, credential: {}};
           signInService.authorizeGoogleUser(user)
-            .then(response => userService.setActiveUser(response.data))
-            .catch();
+            .then(response => {
+              userService.setActiveUser(response.data);
+              headerService.onUserAuthorized();
+            })
+            .catch(e => {
+              console.warn(e);
+              headerService.onUserAuthorized();
+            });
+        } else {
+          headerService.onUserAuthorized();
         }
       });
     });

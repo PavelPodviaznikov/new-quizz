@@ -8,7 +8,6 @@
 }
 
 .spinner-transparent {
-  @extend .spinner;
   background: transparent;
 }
 
@@ -21,6 +20,15 @@
 @mixin circle-animation-delay($delay) {
   -webkit-animation-delay: $delay;
           animation-delay: $delay;
+}
+
+.white .sk-circle:before {
+  background-color: #fff!important;
+}
+
+.small {
+  height: 30px!important;
+  width: 30px!important;
 }
 
 .sk-fading-circle {

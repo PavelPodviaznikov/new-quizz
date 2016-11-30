@@ -5,8 +5,11 @@ import './spinner.scss';
 function spinner() {
   return {
     restrict: 'E',
-    scope: {},
-    template: `<div class="sk-fading-circle">
+    scope: {
+      spinnerColor: '=',
+      spinnerSize: '='
+    },
+    template: `<div class="sk-fading-circle {{spinnerSize}} {{spinnerColor}}">
                 <div class="sk-circle1 sk-circle"></div>
                 <div class="sk-circle2 sk-circle"></div>
                 <div class="sk-circle3 sk-circle"></div>
@@ -20,7 +23,8 @@ function spinner() {
                 <div class="sk-circle11 sk-circle"></div>
                 <div class="sk-circle12 sk-circle"></div>
               </div>`
-  };
+  }
+
 }
 
 export default spinner;
