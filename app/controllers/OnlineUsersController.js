@@ -42,5 +42,8 @@ module.exports = {
         socket.broadcast.emit('onlineUsers:updated', {user: onlineUsers[category][socket.id], category});
       }
     }
+  },
+  getUsers() {
+    return onlineUsers;
   }
 };

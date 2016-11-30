@@ -10,6 +10,8 @@ function socket(http) {
   io.on('connection', (socket) => {
     console.log(`Connection ${socket.id} started`);
 
+    socket.emit('onlineUsers', OnlineUsers.getUsers());
+
     socket.on('disconnect', () => {
      console.log(`Connection ${socket.id} closed`);
      categoryService.clear.call(socket);
