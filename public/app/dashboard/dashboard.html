@@ -1,5 +1,5 @@
 <div class="categories-list-container" layout="row" flex>
-    <md-card ng-repeat="category in welcome.categories" ng-click="welcome.openCategoryPage(category)" layout="row" layout-align="center center">
+    <md-card ng-repeat="category in dashboard.categories" ng-click="dashboard.openCategoryPage(category)" layout="row" layout-align="center center">
         <div class="darker"></div>
         <div class="category-name" ng-bind="category.name"></div>
         <img ng-src="{{category.img}}" alt="{{category.name}}">

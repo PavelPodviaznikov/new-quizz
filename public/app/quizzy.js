@@ -23,7 +23,7 @@ import quizzyService from './quizzyService';
 import quizzyRun from './quizzyRun';
 import quizzyRouter from './quizzyRouter';
 
-import welcome from './welcome/welcome';
+import dashboard from './dashboard/dashboard';
 import category from './category/category';
 import auth from './auth/auth';
 import header from './quizzy/directives/header/header';
@@ -43,7 +43,7 @@ angular
     'ngMessages',
     'ngMdIcons',
 
-    welcome.name,
+    dashboard.name,
     category.name,
     auth.name,
     header.name,

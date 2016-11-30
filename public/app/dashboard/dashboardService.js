@@ -1,8 +1,8 @@
 'use strict';
 
-export default welcomeService;
+export default dashboardService;
 
-function welcomeService($state) {
+function dashboardService($state) {
   'ngInject';
 
   var self = {};

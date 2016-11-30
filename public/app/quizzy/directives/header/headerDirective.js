@@ -18,7 +18,7 @@ function quizzyHeader() {
       };
 
       $scope.onLogoClick = () => {
-        $state.go('welcome');
+        $state.go('dashboard');
       };
 
       $scope.onAuthClick = () => {
