@@ -10,17 +10,12 @@ function router(app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.get('/themes', (req, res) => {
-        res.send([{ name: 'Capitals', value: 'capitals' }]);
-    });
-
     app.get('/env', (req, res) => {
       res.send(firebase.config);
     });
 
     app.post('/user', Auth.registerUser);
     app.post('/user-google', Auth.registerUserWithGoogle);
-
     app.get('/user', Auth.authorizeUser);
     app.get('/user-google', Auth.authorizeUserWithGoogle)
 }
