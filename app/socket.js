@@ -1,7 +1,7 @@
 'use strict';
 
 let io = require('socket.io');
-let categoryService = require('./category');
+let Question = require('./controllers/QuestionController');
 let OnlineUsers = require('./controllers/OnlineUsersController');
 
 function socket(http) {
@@ -14,12 +14,12 @@ function socket(http) {
 
     socket.on('disconnect', () => {
      console.log(`Connection ${socket.id} closed`);
-     categoryService.clear.call(socket);
+
      OnlineUsers.removeOnlineUser(socket);
     });
 
-    socket.on('room:joined', (data) => {
-       categoryService.generateQuestion.call(socket, data.category);
+    socket.on('room:joined', data => {
+       Question.generateQuestion({category: data.category, socket, isAfterAnswer: false});
        OnlineUsers.addOnlineUser(data.user, data.category, socket);
     });
 
@@ -31,7 +31,10 @@ function socket(http) {
       OnlineUsers.updateOnlineUser(user, socket);
     });
 
-    socket.on('room:answer', categoryService.checkAnswer);
+    socket.on('room:answer', config => {
+      Question.updateUserStatistic(config, socket);
+      Question.generateQuestion({category: config.category, socket, isAfterAnswer: true});
+    });
   });
 }
 

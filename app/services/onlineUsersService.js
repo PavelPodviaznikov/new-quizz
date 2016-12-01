@@ -1,6 +1,6 @@
 'use strict';
 
-let categoryService = require('../category');
+let Question = require('../controllers/QuestionController');
 
 class OnlineUsersService {
   constructor() {
@@ -28,7 +28,7 @@ class OnlineUsersService {
         result.category = category;
 
         delete this._onlineUsers[category][socketId];
-        if(!Object.keys(this._onlineUsers[category]).length) categoryService.resetActiveQuestion(category);
+        if(!Object.keys(this._onlineUsers[category]).length) Question.resetActiveQuestion(category);
 
         break;
       }
