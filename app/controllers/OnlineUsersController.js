@@ -1,49 +1,27 @@
 'use strict';
 
-let categoryService = require('../category');
-
-let onlineUsers = {};
+let onlineUsersService = require('../services/onlineUsersService');
 
 module.exports = {
-  addOnlineUser(user, category, socket) {
-    user.connectionId = socket.id;
+  addOnlineUser(userToAdd, category, socket) {
+    let user = onlineUsersService.addOnlineUser({user: userToAdd, socketId: socket.id, category}),
+        users = onlineUsersService.getOnlineUsers();
 
-    if(!onlineUsers[category]) onlineUsers[category] = {};
-    onlineUsers[category][socket.id] = user;
-
-    socket.emit('onlineUsers:added', {user: onlineUsers[category][socket.id], users: onlineUsers});
-    socket.broadcast.emit('onlineUsers:added', {user: onlineUsers[category][socket.id], users: onlineUsers});
+    socket.emit('onlineUsers:added', {user, users});
+    socket.broadcast.emit('onlineUsers:added', {user, users});
   },
-  removeOnlineUser(socket, category) {
-    if(category) {
-      socket.emit('onlineUsers:removed', {user: onlineUsers[category][socket.id], category});
-      socket.broadcast.emit('onlineUsers:removed', {user: onlineUsers[category][socket.id], category});
+  removeOnlineUser(socket) {
+    let {user, category} = onlineUsersService.removeOnlineUser(socket.id);
 
-      delete onlineUsers[category][socket.id];
-
-      if(!Object.keys(onlineUsers).length) categoryService.resetActiveQuestion(category);
-    } else {
-      for(let categoryKey in onlineUsers) {
-        if(onlineUsers[categoryKey][socket.id]) {
-          socket.emit('onlineUsers:removed', {user: onlineUsers[categoryKey][socket.id], category: categoryKey});
-          socket.broadcast.emit('onlineUsers:removed', {user: onlineUsers[categoryKey][socket.id], category: categoryKey});
-
-          delete onlineUsers[categoryKey][socket.id];
-        }
-      }
-    }
+    socket.emit('onlineUsers:removed', {user, category});
+    socket.broadcast.emit('onlineUsers:removed', {user, category});
   },
-  updateOnlineUser(user, socket) {
-    for(let category in onlineUsers) {
-      if(onlineUsers[category][socket.id]) {
-        Object.assign(onlineUsers[socket.id], user);
+  updateOnlineUser(userToUpdate, socket) {
+    let {user, category} = onlineUsersService.updateOnlineUser({user: userToUpdate, socketId: socket.id});
 
-        socket.emit('onlineUsers:updated', {user: onlineUsers[category][socket.id], category});
-        socket.broadcast.emit('onlineUsers:updated', {user: onlineUsers[category][socket.id], category});
-      }
-    }
+    socket.emit('onlineUsers:updated', {user, category});
+    socket.broadcast.emit('onlineUsers:updated', {user, category});
   },
-  getUsers() {
-    return onlineUsers;
-  }
+
+  getUsers: onlineUsersService.getOnlineUsers.bind(onlineUsersService)
 };
