@@ -26,7 +26,7 @@ import quizzyRouter from './quizzyRouter';
 import dashboard from './dashboard/dashboard';
 import category from './category/category';
 import auth from './auth/auth';
-import header from './quizzy/directives/header/header';
+import header from './header/header';
 import socials from './quizzy/directives/socials/socials';
 import spinner from './quizzy/directives/spinner/spinnerDirective';
 
