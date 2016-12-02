@@ -9,6 +9,7 @@ class QuestionController {
     let question = questionService.generateQuestion(config);
 
     config.socket.emit('room:question', question);
+    config.socket.broadcast.emit('room:question', question);
   }
 
   updateUserStatistic(config, socket) {
@@ -19,6 +20,7 @@ class QuestionController {
       let scores = {};
       scores[email] = score;
       socket.emit('room:answer:checked', scores);
+      socket.broadcast.emit('room:answer:checked', scores);
     });
   }
 

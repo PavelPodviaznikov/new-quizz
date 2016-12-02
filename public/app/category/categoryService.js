@@ -47,7 +47,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
 
   function onQuestionLoaded(question) {
     if(!question || question.category !== self.category.value) return false;
-    
+
     Object.assign(self.question, question);
     startTimer(question.seconds);
     $rootScope.$apply();
