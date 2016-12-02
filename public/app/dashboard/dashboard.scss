@@ -1,33 +1,6 @@
-@import "../../scss/colors";
-
 .categories-list-container {
-
   md-card {
    position: relative;
    height: 200px;
-
-   img {
-       height: 100%;
-   }
-
-   .category-name {
-     position: absolute;
-     color: $white;
-     font-size: 32px;
-     cursor: pointer;
-     height: 100%;
-     width: 100%;
-     background-color: rgba(0,0,0, 0.8);
-     &:hover {
-       background-color: rgba(0,0,0, 0.3);
-     }
-   }
-
-   .online-users {
-     position: absolute;
-     bottom: 0;
-     padding: 5px;
-     color: $white;
-   }
  }
 }
