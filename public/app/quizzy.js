@@ -29,6 +29,7 @@ import auth from './auth/auth';
 import header from './header/header';
 import socials from './quizzy/directives/socials/socials';
 import spinner from './quizzy/directives/spinner/spinnerDirective';
+import settings from './settings/settings';
 
 import socketService from './quizzy/services/socketService';
 import userService from './quizzy/services/userService';
@@ -47,7 +48,8 @@ angular
     category.name,
     auth.name,
     header.name,
-    socials.name
+    socials.name,
+    settings.name
   ])
   .run(quizzyRun)
   .config(quizzyRouter)

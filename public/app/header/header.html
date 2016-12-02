@@ -10,12 +10,18 @@
     <img class="user-photo" ng-click="toggleMenu($event)" ng-if="user.photo" ng-src="{{user.photo}}" alt="{{user.fullName}}" />
     <ng-md-icon class="user-photo-placeholder" ng-click="toggleMenu($event)" ng-if="!user.photo" icon="account_box"></ng-md-icon>
     <div class="user-menu"  ng-click="$event.stopPropagation()" ng-if="menu.isOpened">
-        <div class="logout">
-          <md-button ng-click="onLogoutClick()" layout="row" layout-align="center center">
-            <span>Log out</span>
-            <ng-md-icon icon="logout"></ng-md-icon>
-          </md-button>
-        </div>
+      <div class="settings">
+        <md-button ng-click="onSettingsClick()" layout="row" layout-align="center center">
+          <ng-md-icon icon="settings"></ng-md-icon>
+          <span>Settings</span>
+        </md-button>
+      </div>
+      <div class="logout">
+        <md-button ng-click="onLogoutClick()" layout="row" layout-align="center center">
+          <ng-md-icon icon="logout"></ng-md-icon>
+          <span>Log out</span>
+        </md-button>
+      </div>
     </div>
   </div>
 </div>

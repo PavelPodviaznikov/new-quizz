@@ -28,6 +28,11 @@ function quizzyHeader() {
       $scope.onLogoutClick = () => {
         $rootScope.$emit('user:perform:logout');
       };
+
+      $scope.onSettingsClick = () => {
+        $state.go(`${$state.current.name}.settings`);
+        headerService.closeMenu();
+      };
     }
   };
 }

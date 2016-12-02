@@ -56,13 +56,13 @@
   width: 70%;
   position: absolute;
   background: aliceblue;
-  top: 100%;
+  top: 120%;
   left: 0;
   min-width: 100px;
   border-radius: 3px;
   padding: 4px;
   background: #000;
-  border: 2px solid #fff;
+  border: 3px solid #fff;
   z-index: 99;
 }
 
@@ -77,24 +77,25 @@
   left: 25px;
   top: -15px;
   border-width: 8px;
-  margin: 0 -6px;
+  margin: -3px -6px;
   border-bottom-color: #fff;
 }
 
-.header .active-user .user-menu .logout {
+.header .active-user .user-menu > div {
   width: 100%;
 }
 
-.header .active-user .user-menu .logout .md-button {
+.header .active-user .user-menu > div .md-button {
   color: #fff;
   width: 100%;
   margin: 0;
+  padding: 5px;
 }
 
-.header .active-user .user-menu .logout ng-md-icon {
-  margin-left: 10px;
+.header .active-user .user-menu > div ng-md-icon {
+  margin-right: 10px;
   fill: #fff;
 }
-.header .active-user .user-menu .logout ng-md-icon svg {
+.header .active-user .user-menu > div ng-md-icon svg {
   vertical-align: text-bottom;
 }
