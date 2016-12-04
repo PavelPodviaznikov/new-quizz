@@ -32,6 +32,7 @@ class SignUpService {
 
         let user = {
           email: googleUser.user.email,
+          photoUrl: googleUser.user.providerData[0].photoURL,
           token: googleUser.credential.idToken
         };
 

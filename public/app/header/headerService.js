@@ -1,9 +1,10 @@
 'use strict';
 
 class HeaderService {
-  constructor($rootScope, userService) {
+  constructor($rootScope, $interval, userService) {
     this._userService = userService;
     this._$rootScope = $rootScope;
+    this._$interval = $interval;
 
     this.user = this._userService.getActiveUser();
     this.menu = {
@@ -20,7 +21,9 @@ class HeaderService {
   }
 
   onUserAuthorized() {
-    this.conditions.isCheckingAuth = false;
+    this._$interval(() => {
+       this.conditions.isCheckingAuth = false; 
+    }, 0);
   }
 
 }
