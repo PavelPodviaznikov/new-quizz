@@ -30,6 +30,12 @@ class QuestionService {
   resetActiveQuestion(category) {
     categories[category].activeQuestion = null;
   }
+
+  getActiveQuestion(category) {
+    if(!category) return false;
+    
+    return categories[category].activeQuestion;
+  }
 }
 
 function generateQuestion(category) {
@@ -47,7 +53,7 @@ function generateQuestion(category) {
   }
 
   question.answers = util.shuffle(question.answers);
-  question.seconds = new Date().getSeconds();
+  question.timeLife = 10;
   question.category = category;
 
   categories[category].activeQuestion = Object.assign({}, question);

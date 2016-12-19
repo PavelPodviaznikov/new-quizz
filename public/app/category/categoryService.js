@@ -27,7 +27,7 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
     self.onlineUsers = onlineUsersService.onlineUsers[category];
 
     socket.emit('room:joined', {category, user});
-    socket.on('room:question', onQuestionLoaded);
+    socket.on(`room:question:${category}`, onQuestionLoaded);
     socket.on('room:answer:checked', onAnswerChecked)
   };
 
@@ -49,32 +49,24 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
     if(!question || question.category !== self.category.value) return false;
 
     Object.assign(self.question, question);
-    startTimer(question.seconds);
+    startTimer();
     $rootScope.$apply();
   }
 
-  function startTimer(seconds) {
-    if(interval) $interval.cancel(interval);
-
-    let currentSeconds = new Date().getSeconds();
-
-    if(currentSeconds >= seconds) {
-      self.question.time = 15 - (currentSeconds - seconds);
-    } else {
-      self.question.time = 15 - (60 - (seconds + currentSeconds));
-    }
+  function startTimer() {
+    if(interval) clearTimer();
 
     interval = $interval(()=>{
-      if(self.question.time === 0) {
-        socket.emit('room:answer', {
-          category: self.category.name.toLowerCase(),
-          score: user.score,
-          email: user.email
-        });
+      if(self.question.timeLife === 0) {
+        clearTimer();
       }
-
-      self.question.time--;
+      self.question.timeLife--;
     }, 1000);
+  }
+
+  function clearTimer() {
+    $interval.cancel(interval);
+    interval = null;
   }
 
   function onAnswerChecked (scores) {
@@ -87,47 +79,6 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   function checkAnswer(answer) {
     return answer === self.question.answer;
   }
-
-  // let socket = socketService.socket;
-  //
-  // self.category = {
-  //   name: ''
-  // };
-  //
-  // self.question = {};
-  //
-  // self.score = {
-  //   correct: 0,
-  //   incorrect: 0
-  // };
-  //
-  //
-  //
-  // self.makeAnswer = answer => {
-  //   debugger;
-  //   socket.emit(`${self.category.name.toLowerCase()}:answered`, answer);
-  //   socket.on(`correct:answer:${socket.id}`, isCorrect => {
-  //     debugger;
-  //     isCorrect ? self.score.correct++ : self.score.incorrect++;
-  //   });
-  // };
-  //
-  // self.init = categoryName => {
-  //   if (!categoryName) return false;
-  //
-  //   socket.emit(`${categoryName}:joined`);
-  //   socket.on(`${categoryName}:question:generated`, onQuestionLoaded);
-  //
-  //   self.category.name = categoryName.toUpperCase();
-  // };
-  //
-  // function onQuestionLoaded(question) {
-  //   if(!question) return false;
-  //
-  //   debugger;
-  //
-  //   Object.assign(self.question, question);
-  // }
 
   return self;
 }

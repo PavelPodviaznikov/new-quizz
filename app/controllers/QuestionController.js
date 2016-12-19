@@ -1,6 +1,7 @@
 'use strict';
 
 let questionService = require('../services/questionService');
+let timerService = require('../services/timerService');
 
 class QuestionController {
   constructor() {}
@@ -8,8 +9,13 @@ class QuestionController {
   generateQuestion(config) {
     let question = questionService.generateQuestion(config);
 
-    config.socket.emit('room:question', question);
-    config.socket.broadcast.emit('room:question', question);
+    config.socket.emit(`room:question:${config.category}`, question);
+    config.socket.broadcast.emit(`room:question:${config.category}`, question);
+
+    timerService.addTimer(config.category, ()=>{
+      config.isAfterAnswer = true;
+      this.generateQuestion(config);
+    });
   }
 
   updateUserStatistic(config, socket) {
@@ -28,6 +34,7 @@ class QuestionController {
     if(!category) category = 'capitals';
 
     questionService.resetActiveQuestion(category);
+    timerService.clearTimer(category);
   }
 }
 
