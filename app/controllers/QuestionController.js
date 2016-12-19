@@ -1,7 +1,8 @@
 'use strict';
 
-let questionService = require('../services/questionService');
-let timerService = require('../services/timerService');
+const questionService = require('../services/questionService');
+const timerService = require('../services/timerService');
+const enums = require('../enums');
 
 class QuestionController {
   constructor() {}
@@ -9,8 +10,8 @@ class QuestionController {
   generateQuestion(config) {
     let question = questionService.generateQuestion(config);
 
-    config.socket.emit(`room:question:${config.category}`, question);
-    config.socket.broadcast.emit(`room:question:${config.category}`, question);
+    config.socket.emit(enums.socketEvents.roomQuestion(config.category), question);
+    config.socket.broadcast.emit(enums.socketEvents.roomQuestion(config.category), question);
 
     timerService.addTimer(config.category, ()=>{
       config.isAfterAnswer = true;
@@ -25,13 +26,13 @@ class QuestionController {
     .then(() => {
       let scores = {};
       scores[email] = score;
-      socket.emit('room:answer:checked', scores);
-      socket.broadcast.emit('room:answer:checked', scores);
+      socket.emit(enums.socketEvents.roomAnswerChecked, scores);
+      socket.broadcast.emit(enums.socketEvents.roomAnswerChecked, scores);
     });
   }
 
   resetActiveQuestion(category) {
-    if(!category) category = 'capitals';
+    if(!category) category = enums.categories.capitals;
 
     questionService.resetActiveQuestion(category);
     timerService.clearTimer(category);

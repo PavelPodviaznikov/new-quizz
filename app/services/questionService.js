@@ -1,9 +1,10 @@
 'use strict';
 
-let util = require('../util');
-let capitalsData = require('../themes/capitals.json');
-let countriesData = require('../themes/countries/countries.json');
-let firebase = require('../firebase');
+const util = require('../util');
+const capitalsData = require('../themes/capitals.json');
+const countriesData = require('../themes/countries/countries.json');
+const firebase = require('../firebase');
+const enums = require('../enums');
 
 let categories = {
   capitals: {
@@ -33,7 +34,7 @@ class QuestionService {
 
   getActiveQuestion(category) {
     if(!category) return false;
-    
+
     return categories[category].activeQuestion;
   }
 }
@@ -44,10 +45,10 @@ function generateQuestion(category) {
   let question;
 
   switch (category) {
-    case 'capitals':
+    case enums.categories.capitals:
       question = generateCapitalsQuestion();
       break;
-    case 'countries':
+    case enums.categories.countries:
       question = generateCountriesQuestion();
       break;
   }
