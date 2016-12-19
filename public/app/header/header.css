@@ -1,0 +1,101 @@
+.header {
+  margin-bottom: 30px;
+}
+
+.header .logo {
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.header .logo:focus {
+  outline: none;
+}
+
+.header .active-user {
+  position: relative;
+}
+
+.header .active-user .user-name {
+  color: #fff;
+  margin: 0 10px;
+  font-size: 20px;
+  border-bottom: 1px solid transparent;
+}
+
+.header .active-user .user-name:hover {
+  border-bottom: 1px solid #fff;
+  cursor: pointer;
+}
+
+.header .user-photo {
+  width: 35px;
+  height: 35px;
+  border: 2px solid #fff;
+  fill: #fff;
+}
+
+.header .user-photo-placeholder {
+  fill: #fff;
+  height: 35px;
+}
+
+.header .user-photo-placeholder svg {
+  width: 35px;
+  height: 35px;
+}
+
+.header .user-photo:hover,
+.header .user-photo-placeholder:hover {
+  cursor: pointer;
+}
+
+.header .active-user .user-menu {
+  width: 70%;
+  position: absolute;
+  background: aliceblue;
+  top: 120%;
+  left: 0;
+  min-width: 100px;
+  border-radius: 3px;
+  padding: 4px;
+  background: #000;
+  border: 3px solid #fff;
+  z-index: 99;
+}
+
+.header .active-user .user-menu::before {
+  position: absolute;
+  pointer-events: none;
+  border: solid transparent;
+  content: '';
+  height: 0;
+  width: 0;
+  bottom: 100%;
+  left: 25px;
+  top: -15px;
+  border-width: 8px;
+  margin: -3px -6px;
+  border-bottom-color: #fff;
+}
+
+.header .active-user .user-menu > div {
+  width: 100%;
+}
+
+.header .active-user .user-menu > div .md-button {
+  color: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 5px;
+}
+
+.header .active-user .user-menu > div ng-md-icon {
+  margin-right: 10px;
+  fill: #fff;
+}
+.header .active-user .user-menu > div ng-md-icon svg {
+  vertical-align: text-bottom;
+}

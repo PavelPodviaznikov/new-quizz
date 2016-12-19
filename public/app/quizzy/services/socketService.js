@@ -30,6 +30,10 @@ function subscribe() {
   _socket.get(this).on('onlineUsers:updated', onlineUser => {
     _rootScope.get(this).$emit('onlineUsers:updated', onlineUser);
   });
+
+  _socket.get(this).on('onlineUsers', onlineUsers => {
+    _rootScope.get(this).$emit('onlineUsers', onlineUsers);
+  });
 }
 
 export default SocketService;

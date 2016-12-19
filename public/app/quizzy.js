@@ -15,7 +15,7 @@ import 'angular-messages';
 import 'angular-material/angular-material.min.css';
 
 /* App styles */
-import './quizzy.css';
+import './quizzy.scss';
 
 /* App modules */
 import QuizzyCtrl from './quizzyController';
@@ -23,12 +23,13 @@ import quizzyService from './quizzyService';
 import quizzyRun from './quizzyRun';
 import quizzyRouter from './quizzyRouter';
 
-import welcome from './welcome/welcome';
+import dashboard from './dashboard/dashboard';
 import category from './category/category';
 import auth from './auth/auth';
-import header from './quizzy/directives/header/header';
+import header from './header/header';
 import socials from './quizzy/directives/socials/socials';
 import spinner from './quizzy/directives/spinner/spinnerDirective';
+import settings from './settings/settings';
 
 import socketService from './quizzy/services/socketService';
 import userService from './quizzy/services/userService';
@@ -43,11 +44,12 @@ angular
     'ngMessages',
     'ngMdIcons',
 
-    welcome.name,
+    dashboard.name,
     category.name,
     auth.name,
     header.name,
-    socials.name
+    socials.name,
+    settings.name
   ])
   .run(quizzyRun)
   .config(quizzyRouter)

@@ -7,7 +7,7 @@ function authRoute($stateProvider) {
 
   $stateProvider
     .state({
-      name: 'welcome.auth',
+      name: 'dashboard.auth',
       url: '/auth',
       onEnter: onEnter
     })

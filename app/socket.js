@@ -1,35 +1,41 @@
 'use strict';
 
 let io = require('socket.io');
-let categoryService = require('./category');
-let OnlineUsers = require('./controllers/OnlineUsersController');
+const Question = require('./controllers/QuestionController');
+const OnlineUsers = require('./controllers/OnlineUsersController');
+const enums = require('./enums');
 
 function socket(http) {
   io = io(http);
 
-  io.on('connection', (socket) => {
+  io.on(enums.socketEvents.connection, (socket) => {
     console.log(`Connection ${socket.id} started`);
 
-    socket.on('disconnect', () => {
+    socket.emit(enums.socketEvents.onlineUsers, OnlineUsers.getUsers());
+
+    socket.on(enums.socketEvents.disconnect, () => {
      console.log(`Connection ${socket.id} closed`);
-     categoryService.clear.call(socket);
+
      OnlineUsers.removeOnlineUser(socket);
     });
 
-    socket.on('room:joined', (data) => {
-       categoryService.generateQuestion.call(socket, data.category);
-       OnlineUsers.addOnlineUser(data.user, socket);
+    socket.on(enums.socketEvents.roomJoined, data => {
+       Question.generateQuestion({category: data.category, socket, isAfterAnswer: false});
+       OnlineUsers.addOnlineUser(data.user, data.category, socket);
     });
 
-    socket.on('room:leave', () => {
-      OnlineUsers.removeOnlineUser(socket);
+    socket.on(enums.socketEvents.roomLeave, (category) => {
+      OnlineUsers.removeOnlineUser(socket, category);
     });
 
-    socket.on('user:authorized', user => {
+    socket.on(enums.socketEvents.userAuthorized, user => {
       OnlineUsers.updateOnlineUser(user, socket);
     });
 
-    socket.on('room:answer', categoryService.checkAnswer);
+    socket.on(enums.socketEvents.roomAnswer, config => {
+      Question.updateUserStatistic(config, socket);
+      Question.generateQuestion({category: config.category, socket, isAfterAnswer: true});
+    });
   });
 }
 

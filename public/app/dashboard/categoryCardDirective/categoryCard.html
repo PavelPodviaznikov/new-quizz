@@ -1,0 +1,9 @@
+<div class="category-card">
+  <div class="category-name" layout="row" layout-align="center center">
+    <span ng-bind="category.name"></span>
+  </div>
+  <div class="online-users">
+    <span>Online users: {{category.playersOnline}}</span>
+  </div>
+  <img ng-src="{{category.img}}" alt="{{category.name}}">
+</div>

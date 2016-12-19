@@ -1,5 +1,7 @@
 'use strict';
 
+let fs = require('fs');
+
 module.exports = {
   getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -29,5 +31,11 @@ module.exports = {
 
   encodeKey(string) {
     return encodeURIComponent(string).split('.').join('%2E');
+  },
+
+  encodeToBase64(file) {
+    var bitmap = fs.readFileSync(file);
+   // convert binary data to base64 encoded string
+   return new Buffer(bitmap).toString('base64');
   }
 };

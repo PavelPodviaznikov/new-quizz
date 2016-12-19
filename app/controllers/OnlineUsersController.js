@@ -1,31 +1,28 @@
 'use strict';
 
-let categoryService = require('../category');
-
-let onlineUsers = {};
+const onlineUsersService = require('../services/onlineUsersService');
+const enums = require('../enums');
 
 module.exports = {
-  addOnlineUser(user, socket) {
-    user.connectionId = socket.id;
-    onlineUsers[socket.id] = user;
+  addOnlineUser(userToAdd, category, socket) {
+    let user = onlineUsersService.addOnlineUser({user: userToAdd, socketId: socket.id, category}),
+        users = onlineUsersService.getOnlineUsers();
 
-    socket.emit('onlineUsers:added', {user: onlineUsers[socket.id], users: onlineUsers});
-    socket.broadcast.emit('onlineUsers:added', {user: onlineUsers[socket.id], users: onlineUsers});
+    socket.emit(enums.socketEvents.onlineUsersAdded, {user, users});
+    socket.broadcast.emit(enums.socketEvents.onlineUsersAdded, {user, users});
   },
   removeOnlineUser(socket) {
-    socket.emit('onlineUsers:removed', onlineUsers[socket.id]);
-    socket.broadcast.emit('onlineUsers:removed', onlineUsers[socket.id]);
+    let {user, category} = onlineUsersService.removeOnlineUser(socket.id);
 
-    delete onlineUsers[socket.id];
-
-    if(!Object.keys(onlineUsers).length) categoryService.resetActiveQuestion();
+    socket.emit(enums.socketEvents.onlineUsersRemoved, {user, category});
+    socket.broadcast.emit(enums.socketEvents.onlineUsersRemoved, {user, category});
   },
-  updateOnlineUser(user, socket) {
-    if(onlineUsers[socket.id]) {
-      Object.assign(onlineUsers[socket.id], user);
+  updateOnlineUser(userToUpdate, socket) {
+    let {user, category} = onlineUsersService.updateOnlineUser({user: userToUpdate, socketId: socket.id});
 
-      socket.emit('onlineUsers:updated', onlineUsers[socket.id]);
-      socket.broadcast.emit('onlineUsers:updated', onlineUsers[socket.id]);
-    }
-  }
+    socket.emit(enums.socketEvents.onlineUsersUpdated, {user, category});
+    socket.broadcast.emit(enums.socketEvents.onlineUsersUpdated, {user, category});
+  },
+
+  getUsers: onlineUsersService.getOnlineUsers.bind(onlineUsersService)
 };

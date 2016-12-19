@@ -5,17 +5,17 @@ export default quizzyRouter;
 function quizzyRouter($urlRouterProvider, $stateProvider) {
   'ngInject';
 
-  $urlRouterProvider.otherwise('/welcome');
+  $urlRouterProvider.otherwise('/dashboard');
 
   $stateProvider
     .state({
-      name: 'welcome',
-      url: '/welcome',
+      name: 'dashboard',
+      url: '/dashboard',
       views: {
         'content': {
-          template: require('./welcome/welcome.html'),
-          controller: 'WelcomeCtrl',
-          controllerAs: 'welcome'
+          template: require('./dashboard/dashboard.html'),
+          controller: 'DashboardCtrl',
+          controllerAs: 'dashboard'
         }
       }
     })

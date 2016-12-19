@@ -2,6 +2,8 @@
 
 export default categoryService;
 
+import util from '../util';
+
 function categoryService($http, $stateParams, $interval, $rootScope, socketService, userService, onlineUsersService) {
   'ngInject';
 
@@ -11,20 +13,21 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   let user = userService.getActiveUser();
 
   self.category = {
-    name: ''
+    name: '',
+    value: ''
   };
-
-  self.onlineUsers = onlineUsersService.onlineUsers;
 
   self.question = { };
 
   self.score = user.score;
 
   self.init = category => {
+    self.category.value = category;
     self.category.name = category.toUpperCase();
+    self.onlineUsers = onlineUsersService.onlineUsers[category];
 
     socket.emit('room:joined', {category, user});
-    socket.on('room:question', onQuestionLoaded);
+    socket.on(`room:question:${category}`, onQuestionLoaded);
     socket.on('room:answer:checked', onAnswerChecked)
   };
 
@@ -39,11 +42,11 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   };
 
   self.onCategoryLeave = () => {
-    socket.emit('room:leave');
+    socket.emit('room:leave', self.category.value);
   };
 
   function onQuestionLoaded(question) {
-    if(!question) return false;
+    if(!question || question.category !== self.category.value) return false;
 
     Object.assign(self.question, question);
     startTimer();
@@ -51,11 +54,19 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   }
 
   function startTimer() {
-    if(interval) $interval.cancel(interval);
+    if(interval) clearTimer();
 
     interval = $interval(()=>{
-      self.question.time--;
+      if(self.question.timeLife === 0) {
+        clearTimer();
+      }
+      self.question.timeLife--;
     }, 1000);
+  }
+
+  function clearTimer() {
+    $interval.cancel(interval);
+    interval = null;
   }
 
   function onAnswerChecked (scores) {
@@ -68,47 +79,6 @@ function categoryService($http, $stateParams, $interval, $rootScope, socketServi
   function checkAnswer(answer) {
     return answer === self.question.answer;
   }
-
-  // let socket = socketService.socket;
-  //
-  // self.category = {
-  //   name: ''
-  // };
-  //
-  // self.question = {};
-  //
-  // self.score = {
-  //   correct: 0,
-  //   incorrect: 0
-  // };
-  //
-  //
-  //
-  // self.makeAnswer = answer => {
-  //   debugger;
-  //   socket.emit(`${self.category.name.toLowerCase()}:answered`, answer);
-  //   socket.on(`correct:answer:${socket.id}`, isCorrect => {
-  //     debugger;
-  //     isCorrect ? self.score.correct++ : self.score.incorrect++;
-  //   });
-  // };
-  //
-  // self.init = categoryName => {
-  //   if (!categoryName) return false;
-  //
-  //   socket.emit(`${categoryName}:joined`);
-  //   socket.on(`${categoryName}:question:generated`, onQuestionLoaded);
-  //
-  //   self.category.name = categoryName.toUpperCase();
-  // };
-  //
-  // function onQuestionLoaded(question) {
-  //   if(!question) return false;
-  //
-  //   debugger;
-  //
-  //   Object.assign(self.question, question);
-  // }
 
   return self;
 }

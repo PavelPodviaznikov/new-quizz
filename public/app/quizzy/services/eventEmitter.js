@@ -3,7 +3,7 @@
 import Firebase from './firebaseService';
 
 class EventEmitter {
-  constructor($rootScope, headerService, authService, userService, onlineUsersService, signInService) {
+  constructor($rootScope, headerService, authService, userService, onlineUsersService, signInService, dashboardService) {
     $rootScope.$on('user:authorized', () => {
       headerService.onUserAuthorized();
     });
@@ -26,18 +26,32 @@ class EventEmitter {
         if(user) {
           user = {user: user, credential: {}};
           signInService.authorizeGoogleUser(user)
-            .then(response => userService.setActiveUser(response.data))
-            .catch();
+            .then(response => {
+              userService.setActiveUser(response.data);
+              headerService.onUserAuthorized();
+            })
+            .catch(e => {
+              console.warn(e);
+              headerService.onUserAuthorized();
+            });
+        } else {
+          headerService.onUserAuthorized();
         }
       });
     });
 
     $rootScope.$on('onlineUsers:added', (e, data) => {
       onlineUsersService.onOnlineUserAdded(data);
+      dashboardService.onOnlineUsersAdded(data);
+    });
+
+    $rootScope.$on('onlineUsers', (e, data) => {
+      dashboardService.onOnlineUsersLoaded(data);
     });
 
     $rootScope.$on('onlineUsers:removed', (e, onlineUser) => {
       onlineUsersService.onOnlineUserRemoved(onlineUser);
+      dashboardService.onOnlineUsersRemoved(onlineUser);
     });
 
     $rootScope.$on('onlineUsers:updated', (e, onlineUser) => {
