@@ -1,0 +1,16 @@
+<md-content class="md-padding" layout="column" flex>
+    <form name="profileForm">
+        <md-input-container layout="row" flex>
+            <label>Name</label>
+            <input ng-model="ptc.profile.name">
+        </md-input-container>
+        <md-input-container layout="row" flex>
+            <label>Surname</label>
+            <input ng-model="ptc.profile.surname">
+        </md-input-container>
+        <md-input-container layout="row" flex>
+            <label>Email</label>
+            <input ng-model="ptc.profile.email" ng-readonly="true">
+        </md-input-container>
+    </form>
+</md-content>
